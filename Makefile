@@ -6,7 +6,7 @@
 #    By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/03 01:27:28 by ma1iik            #+#    #+#              #
-#    Updated: 2023/01/03 03:19:37 by ma1iik           ###   ########.fr        #
+#    Updated: 2023/01/20 16:39:28 by ma1iik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			=	cub3d
 HEADERS			=	cub3d.h
 CC				= 	gcc
 RM				= 	rm -rf
-CFLAGS 			=  #-Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS 			=  -Wall -Wextra -Werror -Wno-unused-variable #-g -fsanitize=address
 
 SRCS	=	main.c 
 OBJS	= ${SRCS:.c=.o}
@@ -29,7 +29,7 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 $(NAME):	${OBJS}
-			${CC} ${CFLAGS} ${OBJS} ${LIBS} -o ${NAME}
+			${CC} ${CFLAGS} ${OBJS} ${LIBS} -o ${NAME} -lm
 
 all:	${NAME}
 

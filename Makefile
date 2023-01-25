@@ -6,7 +6,7 @@
 #    By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/03 01:27:28 by ma1iik            #+#    #+#              #
-#    Updated: 2023/01/22 12:56:50 by ma1iik           ###   ########.fr        #
+#    Updated: 2023/01/24 03:27:21 by ma1iik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CC				= 	gcc
 RM				= 	rm -rf
 CFLAGS 			=  -Wall -Wextra -Werror -Wno-unused-variable -g -fsanitize=address
 
-SRCS	=	main.c 
+SRCS	=	main.c \
+			utils.c
 OBJS	= ${SRCS:.c=.o}
 
 UNAME_S				= $(shell uname -s)

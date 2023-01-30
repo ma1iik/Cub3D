@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 01:27:23 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/01/25 07:33:19 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/01/29 20:55:29 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,8 @@ int	ft_wrongchar(t_data *data)
 				return(ft_error(4));
 			if (data->map[i][j] == 'N' || data->map[i][j] == 'S' || data->map[i][j] == 'W' || data->map[i][j] == 'E')
 			{
-				data->pl_x = i;
-				data->pl_y = j;
+				data->pl_x = j;
+				data->pl_y = i;
 				num++;
 			}
 			j++;
@@ -226,15 +226,14 @@ int	ft_checkways(int x, int y, char **map, t_data *data)
 int	ft_checkwalls(t_data *data)
 {
 	int	i = 0;
-	while (data->map_star[i])
-		printf("%s\n", data->map_star[i++]);
-	if (ft_checkwalls1(data, data->map_star) == WRONG)
-		return (WRONG);
+	// while (data->map_star[i])
+	// 	printf("%s\n", data->map_star[i++]);
 	if (ft_first_last_row(data, data->map_star) == WRONG)
 		return (WRONG);
 	if (ft_rowsbetween(data, data->map_star) == WRONG)
 		return (WRONG);
-	
+	if (ft_checkwalls1(data, data->map_star) == WRONG)
+		return (WRONG);
 	return (RIGHT);
 }
 
@@ -261,11 +260,20 @@ int ft_parsing(int ac, t_data *data, char *file)
 		return (WRONG);
 	if (ft_checkwalls(data) == WRONG)
 		return (WRONG);
-	if (ft_checkways(data->pl_x, data->pl_y, data->map_star, data) == WRONG)
+	if (ft_checkways(data->pl_y, data->pl_x, data->map_star, data) == WRONG)
 		return (WRONG);
 	close(fd);
     return (RIGHT);
 }
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->img.addr + (y * data->img.line_length + x * (data->img.bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
 
 int main(int ac, char **av)
 {
@@ -274,6 +282,8 @@ int main(int ac, char **av)
 	data = ft_calloc(1, sizeof(t_data));
     if (ft_parsing(ac, data, av[1]) == WRONG)
 		return (WRONG);
-	
+	init_draw(data);
+	//draw_circle(data, 10, 500, 500, 0x00FFAA00);
+	mlx_loop(data->mlx);
     printf ("ALL GOOD\n");
 }

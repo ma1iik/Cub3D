@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/01/25 07:38:55 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/01/29 20:41:35 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,25 @@
 # define WRONG 0
 # define RIGHT 1
 
+enum {
+	ON_KEYDOWN = 2,
+	ON_KEYUP = 3,
+	ON_MOUSEDOWN = 4,
+	ON_MOUSEUP = 5,
+	ON_MOUSEMOVE = 6,
+	ON_EXPOSE = 12,
+	ON_DESTROY = 17
+};
+
+
+typedef struct	s_img {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_img;
+
 typedef struct s_data
 {
 	int		pl_x;
@@ -33,23 +52,35 @@ typedef struct s_data
 	int		map_l;
 	char	**map;
 	char	**map_star;
+	void	*mlx;
+	void	*win;
+	t_img	img;
 }				t_data;
 
-int ft_parsing(int ac, t_data *data, char *file);
-int ft_check_ext(t_data *data, char *file);
-int	ft_error(int n);
-int	ft_mapsize(char *file);
-int	ft_wrongchar(t_data *data);
-int	ft_map_len(t_data *data);
-int	ft_fill_map(t_data *data, int fd, char **map);
-int	ft_fill_map2(t_data *data);
-int	ft_fill_map3(t_data *data);
-int	ft_checkways(int x, int y, char **map, t_data *data);
-int	ft_checkways1(int x, int y, char **map, t_data *data);
-int	ft_ischar(char c);
-int	ft_checkwalls1(t_data *data, char **maps);
-int ft_first_last_row(t_data *data, char **map);
+//PARSING
+int		ft_parsing(int ac, t_data *data, char *file);
+int		ft_check_ext(t_data *data, char *file);
+int		ft_error(int n);
+int		ft_mapsize(char *file);
+int		ft_wrongchar(t_data *data);
+int		ft_map_len(t_data *data);
+int		ft_fill_map(t_data *data, int fd, char **map);
+int		ft_fill_map2(t_data *data);
+int		ft_fill_map3(t_data *data);
+int		ft_checkways(int x, int y, char **map, t_data *data);
+int		ft_checkways1(int x, int y, char **map, t_data *data);
+int		ft_checkwalls1(t_data *data, char **maps);
+int		ft_first_last_row(t_data *data, char **map);
+int		ft_rowsbetween(t_data *data, char **map);
+
+//INIT and DRAW
+void 	init_draw(t_data *data);
+void 	draw_char(char **map, int rows, int cols, t_data *data);
+void	draw_circle(t_data *data, int rad, int x, int y, int color);
+void 	draw_map(char **map, int rows, int cols, t_data *data);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+//UTILS
+int		ft_ischar(char c);
 int		ft_isspace(int c);
-int	ft_rowsbetween(t_data *data, char **map);
 
 #endif

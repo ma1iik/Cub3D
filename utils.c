@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 03:23:53 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/01/25 07:39:15 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/01/27 00:13:27 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	ft_error(int n)
 		printf("Error : Impossible to enter area found on the map\n");
 	if (n == 7)
 		printf("Error : Hole in the map\n");
+	if (n == 8)
+		printf("Error : Wall error\n");
 	return (WRONG);
 }
 
@@ -93,7 +95,6 @@ int    ft_checkwalls1(t_data *data, char **maps)
 	int		y;
 
     y = 0;
-	printf("%d\n",data->map_h);
     while (maps[y])
     {
     	x = 0;
@@ -126,7 +127,7 @@ int ft_first_last_row(t_data *data, char **map)
     {
         if (map[0][i] != '1' && map[0][i] != '*')
 		{
-            return (ft_error(7));
+            return (ft_error(8));
 		}
         i++;
     }
@@ -134,7 +135,7 @@ int ft_first_last_row(t_data *data, char **map)
     while (i < data->map_l)
     {
         if (map[data->map_h - 1][i] != '1' && map[data->map_h - 1][i] != '*')
-            return (ft_error(7));
+            return (ft_error(8));
         i++;
     }
     return (RIGHT);
@@ -152,12 +153,12 @@ int	ft_rowsbetween(t_data *data, char **map)
 		while (map[i][j] == '*')
 			j++;
 		if (map[i][j] != '1')
-			return (ft_error(7));
+			return (ft_error(8));
 		j = data->map_l - 1;
 		while (map[i][j] == '*')
 			j--;
 		if (map[i][j] != '1')
-			return (ft_error(7));
+			return (ft_error(8));
 		i++;
 	}
 	return (RIGHT);

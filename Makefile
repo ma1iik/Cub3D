@@ -6,7 +6,7 @@
 #    By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/03 01:27:28 by ma1iik            #+#    #+#              #
-#    Updated: 2023/01/24 03:27:21 by ma1iik           ###   ########.fr        #
+#    Updated: 2023/01/29 20:42:07 by ma1iik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,11 @@ NAME			=	cub3d
 HEADERS			=	cub3d.h
 CC				= 	gcc
 RM				= 	rm -rf
-CFLAGS 			=  -Wall -Wextra -Werror -Wno-unused-variable -g -fsanitize=address
+CFLAGS 			=  -Wall -Wextra -Werror -Wno-unused-variable #-g -fsanitize=address
 
 SRCS	=	main.c \
-			utils.c
+			utils.c \
+			drawing.c
 OBJS	= ${SRCS:.c=.o}
 
 UNAME_S				= $(shell uname -s)

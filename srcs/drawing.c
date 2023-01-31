@@ -6,11 +6,11 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:17 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/01/29 20:59:04 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/01/31 03:31:02 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "../cub3d.h"
 
 void draw_map(char **map, int rows, int cols, t_data *data)
 {
@@ -72,6 +72,8 @@ void draw_char(char **map, int rows, int cols, t_data *data)
         {
             if (ft_ischar(map[i][j]))
 			{
+                data->pl_tx_y = y;
+                data->pl_tx_x = x;
 				draw_circle(data, 10, x + 10, y + 10, 0xFF0000);
 				return ;
 			}

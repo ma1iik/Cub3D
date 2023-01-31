@@ -1,93 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/24 03:23:53 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/01/27 00:13:27 by ma1iik           ###   ########.fr       */
+/*   Created: 2023/01/31 02:19:02 by ma1iik            #+#    #+#             */
+/*   Updated: 2023/01/31 02:23:57 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "../cub3d.h"
 
-int	ft_error(int n)
+int	ft_checkways(int x, int y, char **map, t_data *data)
 {
-	if (n == 0)
-		printf("Error: Wrong number of arguments\n");
-	else if (n == 1)
-		printf("Error : Wrong extension of map\n");
-	else if (n == 2)
-		printf("Error : Map file is a directory\n");
-	else if (n == 3)
-		printf("Error : Map file not read properly\n");
-	if (n == 4)
-		printf("Error : Wrong character on map found\n");
-	if (n == 5)
-		printf("Error : Direction utilized in incorrect manner\n");
-	if (n == 6)
-		printf("Error : Impossible to enter area found on the map\n");
-	if (n == 7)
-		printf("Error : Hole in the map\n");
-	if (n == 8)
-		printf("Error : Wall error\n");
-	return (WRONG);
-}
-
-int	ft_mapsize(char *file)
-{
-	int	fd;
-	int	i;
-	char *line;
-
-	i = 0;
-	fd = open(file, O_RDONLY);
-	while (get_next_line(fd, &line) > 0)
-	{
-		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E' || line[0] == '\n' || line[0] == '\0')
-		{
-			free (line);
-			continue;
-		}
-		i++;
-		free(line);
-	}
-	i++;
-	close(fd);
-	return (i - 2);
-}
-
-
-int	ft_map_len(t_data *data)
-{
-	int	len;
 	int	i;
 	int	j;
 
 	i = 0;
-	len = 0;
-	while (data->map[i])
+	ft_checkways1(x, y, map, data);
+	while(map[i])
 	{
 		j = 0;
-		while (data->map[i][j])
+		while (map[i][j])
 		{
+			if (map[i][j] == '0')
+			{
+				return (ft_error(6));
+			}
 			j++;
 		}
-		if (j > len)
-			len = j;
 		i++;
 	}
-	return (len);
+    return (1);
 }
 
-int	ft_ischar(char c)
+int	ft_checkwalls(t_data *data)
 {
-	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
-		return (1);
-	else
-		return (0);
+	int	i = 0;
+	// while (data->map_star[i])
+	// 	printf("%s\n", data->map_star[i++]);
+	if (ft_first_last_row(data, data->map_star) == WRONG)
+		return (WRONG);
+	if (ft_rowsbetween(data, data->map_star) == WRONG)
+		return (WRONG);
+	if (ft_checkwalls1(data, data->map_star) == WRONG)
+		return (WRONG);
+	return (RIGHT);
 }
+
 
 int    ft_checkwalls1(t_data *data, char **maps)
 {

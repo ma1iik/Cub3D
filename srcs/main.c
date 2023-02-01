@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 01:27:23 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/01/31 15:51:23 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/01 04:16:49 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,33 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 	dst = data->img.addr + (y * data->img.line_length + x * (data->img.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
+}
+
+void	ft_direction(t_data *data, char player)
+{
+
+	if (player == 'N')
+	{
+		data->dir.x = data->pl_tx_x + 10;
+		data->dir.y = 0;
+	}
+	else if (player == 'E')
+	{
+		data->dir.x = 1;
+		data->dir.y = 0;
+	}
+	else if (player == 'S')
+	{
+		data->dir.x = data->pl_tx_x + 10;
+		data->dir.y = (data->map_h * 20) + 100;
+	}
+	else if (player == 'W')
+	{
+		data->dir.x = -1;
+		data->dir.y = 0;
+	}
+	printf("x is %d\ny is %d\n", data->dir.x, data->dir.y);
+	return ;
 }
 
 int main(int ac, char **av)

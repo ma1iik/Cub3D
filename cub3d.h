@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/01/31 03:04:17 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/01 04:17:28 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@
 # include <math.h>
 # include <float.h>
 # include <stdio.h>
+# include <math.h>
 
 # define WRONG 0
 # define RIGHT 1
+# define WIDTH 1920
+# define HEIGHT 1080
 
 # ifdef __APPLE__
 #  define ESC 53
@@ -49,6 +52,10 @@ enum {
 	ON_DESTROY = 17
 };
 
+typedef struct	s_vec {
+	int		x;
+	int		y;
+}				t_vec;
 
 typedef struct	s_img {
 	void	*img;
@@ -60,6 +67,7 @@ typedef struct	s_img {
 
 typedef struct s_data
 {
+	char	player;
 	int		pl_x;
 	int		pl_y;
 	int		pl_tx_x;
@@ -70,6 +78,7 @@ typedef struct s_data
 	char	**map_star;
 	void	*mlx;
 	void	*win;
+	t_vec	dir;
 	t_img	img;
 }				t_data;
 
@@ -96,6 +105,10 @@ void 	draw_char(char **map, int rows, int cols, t_data *data);
 void	draw_circle(t_data *data, int rad, int x, int y, int color);
 void 	draw_map(char **map, int rows, int cols, t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	ft_direction(t_data *data, char player);
+//void 	draw_ray(t_data *data, int x0, int y0, int x1, int y1, int color);
+//void 	draw_ray(t_data *data, int x, int y, int angle, int length);
+void	draw_ray(t_data *data, int x0, int y0, int x1, int y1, int color);
 //UTILS
 int		ft_ischar(char c);
 int		ft_isspace(int c);

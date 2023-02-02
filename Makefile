@@ -6,7 +6,7 @@
 #    By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/03 01:27:28 by ma1iik            #+#    #+#              #
-#    Updated: 2023/01/31 14:36:40 by ma1iik           ###   ########.fr        #
+#    Updated: 2023/02/01 16:49:15 by ma1iik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME			=	cub3d
 HEADERS			=	cub3d.h
 CC				= 	gcc
 RM				= 	rm -rf
-CFLAGS 			=  -Wall -Wextra -Werror -Wno-unused-variable #-g -fsanitize=address
+CFLAGS 			=  -Wall -Wextra -Werror -Wno-unused-variable -g -fsanitize=address
 
 SRCS	=	srcs/main.c \
 			srcs/utils.c \

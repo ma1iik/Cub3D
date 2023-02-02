@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 01:27:23 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/01 04:16:49 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/02 17:00:50 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,25 +139,29 @@ void	ft_direction(t_data *data, char player)
 
 	if (player == 'N')
 	{
-		data->dir.x = data->pl_tx_x + 10;
-		data->dir.y = 0;
+		data->dir.x = 0;
+		data->dir.y = - 1;
+		data->pa = M_PI / 2;
 	}
 	else if (player == 'E')
 	{
 		data->dir.x = 1;
 		data->dir.y = 0;
+		data->pa = 0;
 	}
 	else if (player == 'S')
 	{
-		data->dir.x = data->pl_tx_x + 10;
-		data->dir.y = (data->map_h * 20) + 100;
+		data->dir.x = 0;
+		data->dir.y = 1;
+		data->pa = 3 * M_PI / 2;
 	}
 	else if (player == 'W')
 	{
 		data->dir.x = -1;
 		data->dir.y = 0;
+		data->pa = M_PI;
 	}
-	printf("x is %d\ny is %d\n", data->dir.x, data->dir.y);
+	// printf("x is %d\ny is %d\n", data->dir.x, data->dir.y);
 	return ;
 }
 

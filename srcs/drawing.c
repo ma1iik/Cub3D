@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:17 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/01 04:50:37 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/02 19:54:10 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,94 +94,7 @@ void init_draw(t_data *data)
 	//my_mlx_pixel_put(data, 5, 5, 0x00FF0000);
 	draw_map(data->map, data->map_h, data->map_l, data);
 	draw_char(data->map, data->map_h, data->map_l, data);
-    draw_ray(data, data->pl_tx_x + 10, data->pl_tx_y + 10, data->dir.x, data->dir.y, 0x0000FF);
+    draw_line_in_direction(data, data->pl_tx_x + 10, data->pl_tx_y + 10, data->pa, 50);
+    //dda(data, (float)5, (float)4, 0xFF0000);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 }
-
-void draw_ray(t_data *data, int x0, int y0, int x1, int y1, int color)
-{
-    int dx = x1 - x0;
-    int dy = y1 - y0;
-    int i = 1;
-    int x = x0;
-    int y = y0;
-    int xinc, yinc;
-
-    if (abs(dx) > abs(dy))
-    {
-        xinc = dx / abs(dx);
-        yinc = dy / abs(dx);
-        dy = abs(dy);
-    }
-    else
-    {
-        xinc = dx / abs(dy);
-        yinc = dy / abs(dy);
-        dx = abs(dx);
-    }
-    while (i <= dx || i <= dy)
-    {
-        my_mlx_pixel_put(data, x, y, color);
-        x += xinc;
-        y += yinc;
-        i++;
-    }
-}
-
-void	mlx_line_to(t_data *data, int x, int y, int end_x, int end_y, int color)
-{
-	int		dx;
-	int		dy;
-	int		i;
-	int		xinc;
-	int		yinc;
-
-	dx = end_x - x;
-	dy = end_y - y;
-	xinc = (dx > 0) ? 1 : -1;
-	yinc = (dy > 0) ? 1 : -1;
-	dx = abs(dx);
-	dy = abs(dy);
-	my_mlx_pixel_put(data, x, y, color);
-	if (dx > dy)
-	{
-		int	cumul = dx / 2;
-		i = 1;
-		while (i <= dx)
-		{
-			x += xinc;
-			cumul += dy;
-			if (cumul >= dx)
-			{
-				cumul -= dx;
-				y += yinc;
-			}
-			my_mlx_pixel_put(data, x, y, color);
-			i++;
-		}
-	}
-	else
-	{
-		int	cumul = dy / 2;
-		i = 1;
-		while (i <= dy)
-		{
-			y += yinc;
-			cumul += dx;
-			if (cumul >= dy)
-			{
-				cumul -= dy;
-				x += xinc;
-			}
-			my_mlx_pixel_put(data, x, y, color);
-			i++;
-		}
-	}
-}
-
-// void draw_ray(t_data *data, int x, int y, int angle, int length)
-// {
-//     int end_x = x + length * cos(angle);
-//     int end_y = y + length * sin(angle);
-//     mlx_line_to(data, x, y, end_x, end_y, 0x7FFF8080);
-// }

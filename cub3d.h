@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/01 04:17:28 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/02 11:23:12 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,16 @@
 #  define KEY_A 0
 #  define KEY_S 1
 #  define KEY_D 2
+#  define ARROW_L 123
+#  define ARROW_R 124
 # elif __linux__
 #  define ESC 65307
 #  define KEY_W 119
 #  define KEY_A 97
 #  define KEY_S 115
 #  define KEY_D 100
+#  define ARROW_L 65361 
+#  define ARROW_R 65363 
 # endif
 
 enum {
@@ -55,6 +59,7 @@ enum {
 typedef struct	s_vec {
 	int		x;
 	int		y;
+	float	rad;
 }				t_vec;
 
 typedef struct	s_img {
@@ -72,6 +77,9 @@ typedef struct s_data
 	int		pl_y;
 	int		pl_tx_x;
 	int		pl_tx_y;
+	float	pdx;
+	float	pdy;
+	float	pa;
 	int		map_h;
 	int		map_l;
 	char	**map;
@@ -106,9 +114,9 @@ void	draw_circle(t_data *data, int rad, int x, int y, int color);
 void 	draw_map(char **map, int rows, int cols, t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	ft_direction(t_data *data, char player);
-//void 	draw_ray(t_data *data, int x0, int y0, int x1, int y1, int color);
-//void 	draw_ray(t_data *data, int x, int y, int angle, int length);
 void	draw_ray(t_data *data, int x0, int y0, int x1, int y1, int color);
+void 	draw_line_in_direction(t_data *data, int x0, int y0, float direction, int length);
+void	dda(t_data *data, float x2, float y2, int color);
 //UTILS
 int		ft_ischar(char c);
 int		ft_isspace(int c);

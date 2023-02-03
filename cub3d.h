@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/02 11:23:12 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/03 19:53:24 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ typedef struct	s_vec {
 	float	rad;
 }				t_vec;
 
+typedef struct	s_ray {
+	float		x;
+	float		y;
+	int		distance;
+}				t_ray;
+
 typedef struct	s_img {
 	void	*img;
 	char	*addr;
@@ -86,8 +92,8 @@ typedef struct s_data
 	char	**map_star;
 	void	*mlx;
 	void	*win;
-	t_vec	dir;
 	t_img	img;
+	t_ray	ray;
 }				t_data;
 
 //PARSING
@@ -115,8 +121,12 @@ void 	draw_map(char **map, int rows, int cols, t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	ft_direction(t_data *data, char player);
 void	draw_ray(t_data *data, int x0, int y0, int x1, int y1, int color);
-void 	draw_line_in_direction(t_data *data, int x0, int y0, float direction, int length);
+void 	draw_line_in_direction(t_data *data, int x0, int y0, float direction, float length);
 void	dda(t_data *data, float x2, float y2, int color);
+void 	dda_angle_v(t_data *data, float radian, float length, int color);
+void 	get_point_at_distance(float player_x, float player_y, float direction, t_data *data);
+
+
 //UTILS
 int		ft_ischar(char c);
 int		ft_isspace(int c);

@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:17 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/02 19:54:10 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/03 19:57:02 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,22 @@ void draw_char(char **map, int rows, int cols, t_data *data)
     }
 }
 
+void get_point_at_distance(float player_x, float player_y, float direction, t_data *data)
+{
+    data->ray.x = player_x + 50 * cos(direction);
+    data->ray.y = player_y + 50 * sin(direction);
+}
+
 void init_draw(t_data *data)
 {
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Hello world!");
 	data->img.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel, &data->img.line_length, &data->img.endian);
-	//my_mlx_pixel_put(data, 5, 5, 0x00FF0000);
 	draw_map(data->map, data->map_h, data->map_l, data);
 	draw_char(data->map, data->map_h, data->map_l, data);
-    draw_line_in_direction(data, data->pl_tx_x + 10, data->pl_tx_y + 10, data->pa, 50);
-    //dda(data, (float)5, (float)4, 0xFF0000);
+    my_mlx_pixel_put(data, data->ray.x, data->ray.y, 0xFF0000);
+    dda(data, data->ray.x, data->ray.y, 0xFF0000);
+    printf("x is %.0f  y is %.0f\n", data->ray.x, data->ray.y);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 }

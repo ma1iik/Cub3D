@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 01:27:23 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/02 17:00:50 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/03 15:59:13 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,29 +139,22 @@ void	ft_direction(t_data *data, char player)
 
 	if (player == 'N')
 	{
-		data->dir.x = 0;
-		data->dir.y = - 1;
-		data->pa = M_PI / 2;
+		data->pa = 3 * M_PI / 2;
 	}
 	else if (player == 'E')
 	{
-		data->dir.x = 1;
-		data->dir.y = 0;
 		data->pa = 0;
 	}
 	else if (player == 'S')
 	{
-		data->dir.x = 0;
-		data->dir.y = 1;
-		data->pa = 3 * M_PI / 2;
+		data->pa = M_PI / 2;
 	}
 	else if (player == 'W')
 	{
-		data->dir.x = -1;
-		data->dir.y = 0;
 		data->pa = M_PI;
 	}
 	// printf("x is %d\ny is %d\n", data->dir.x, data->dir.y);
+	get_point_at_distance(data->pl_tx_x + 10, data->pl_tx_y + 10, data->pa, data);
 	return ;
 }
 
@@ -174,7 +167,7 @@ int main(int ac, char **av)
 		return (WRONG);
 	init_draw(data);
 	//printf("y is --> %d\nx is --> %d\n", data->pl_tx_y, data->pl_tx_x);
-	printf("pl y --> %d\npl tx y / 20 --> %d\n", data->pl_y, (data->pl_tx_y - 100) % 20);
+	//printf("pl y --> %d\npl tx y / 20 --> %d\n", data->pl_y, (data->pl_tx_y - 100) % 20);
 	mlx_hook(data->win, ON_DESTROY, 0, ft_exit, NULL);
 	mlx_hook(data->win, ON_KEYDOWN, 1L<<0, ft_action, data);
 	mlx_key_hook(data->win, ft_release, data);

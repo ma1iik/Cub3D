@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:19:02 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/01/31 02:23:57 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/04 08:12:08 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_checkwalls(t_data *data)
 {
 	int	i = 0;
 	// while (data->map_star[i])
-	// 	printf("%s\n", data->map_star[i++]);
+	//  	printf("%s\n", data->map_star[i++]);
 	if (ft_first_last_row(data, data->map_star) == WRONG)
 		return (WRONG);
 	if (ft_rowsbetween(data, data->map_star) == WRONG)

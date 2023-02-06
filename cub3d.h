@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/03 19:53:24 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/06 04:39:46 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include <math.h>
 # include <float.h>
 # include <stdio.h>
 # include <math.h>
@@ -27,6 +26,7 @@
 # define RIGHT 1
 # define WIDTH 1920
 # define HEIGHT 1080
+# define TX_L 40
 
 # ifdef __APPLE__
 #  define ESC 53
@@ -121,11 +121,9 @@ void 	draw_map(char **map, int rows, int cols, t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	ft_direction(t_data *data, char player);
 void	draw_ray(t_data *data, int x0, int y0, int x1, int y1, int color);
-void 	draw_line_in_direction(t_data *data, int x0, int y0, float direction, float length);
 void	dda(t_data *data, float x2, float y2, int color);
-void 	dda_angle_v(t_data *data, float radian, float length, int color);
 void 	get_point_at_distance(float player_x, float player_y, float direction, t_data *data);
-
+void ray_till_wall(t_data *data);
 
 //UTILS
 int		ft_ischar(char c);

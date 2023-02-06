@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:15:21 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/03 20:09:58 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/06 09:04:19 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	draw_text(t_data *data)
 	int		x;
 
 	y = data->pl_tx_y;
-	while (y < data->pl_tx_y + 20)
+	while (y < data->pl_tx_y + TX_L)
 	{
 		x = data->pl_tx_x;
-		while (x < data->pl_tx_x + 20)
+		while (x < data->pl_tx_x + TX_L)
 		{
 			my_mlx_pixel_put(data, x, y, 0xFFFFFF);
 			x++;
@@ -39,12 +39,12 @@ void	draw_text(t_data *data)
 
 void	move_down(t_data *data)
 {
-	//printf("pl y --> %d\npl tx y / 20 --> %d\n", data->pl_y, (data->pl_tx_y - 100) % 20);
-	if ((data->pl_tx_y) % 20 == 0 && data->map[data->pl_y + 1][data->pl_x] == '1')
+	//printf("pl y --> %d\npl tx y / TX_L --> %d\n", data->pl_y, (data->pl_tx_y - 100) % 20);
+	if ((data->pl_tx_y) % TX_L == 0 && data->map[data->pl_y + 1][data->pl_x] == '1')
 		return ;
-	if ((data->pl_tx_x) % 20 != 0 && (data->map[data->pl_y + 1][data->pl_x] == '1' || data->map[data->pl_y + 1][data->pl_x - 1] == '1'))
+	if ((data->pl_tx_x) % TX_L != 0 && (data->map[data->pl_y + 1][data->pl_x] == '1' || data->map[data->pl_y + 1][data->pl_x - 1] == '1'))
 		return ;
-	if ((data->pl_tx_y) % 20 != 0 && data->map[data->pl_y + 1][data->pl_x] == '0')
+	if ((data->pl_tx_y) % TX_L != 0 && data->map[data->pl_y + 1][data->pl_x] == '0')
 	{
 		data->map[data->pl_y + 1][data->pl_x] = data->player;
 		data->map[data->pl_y][data->pl_x] = '0';
@@ -52,23 +52,21 @@ void	move_down(t_data *data)
 	}
 	//draw_text(data);
 	draw_map(data->map, data->map_h, data->map_l, data);
-	data->pl_tx_y += 10;
-	data->ray.y += 10;
-	draw_circle(data, 10, data->pl_tx_x + 10, data->pl_tx_y + 10, 0xFF0000);
-	//draw_line_in_direction(data, data->pl_tx_x + 10, data->pl_tx_y + 10, data->pa, 50);
-	//draw_line_in_direction(data, data->pl_tx_x, data->pl_tx_y, data->dir.x, data->dir.y, 0xFF0000);`
-	dda(data, data->ray.x, data->ray.y, 0xFF0000);
+	data->pl_tx_y += TX_L/2;
+	data->ray.y += TX_L/2;
+	draw_circle(data, TX_L/2, data->pl_tx_x + TX_L/2, data->pl_tx_y + TX_L/2, 0xFF0000);
+    ray_till_wall(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 	//printf("pl y --> %d\npl tx y / 20 --> %d\n", data->pl_y, (data->pl_tx_y - 100) % 20);
 }
 
 void	move_up(t_data *data)
 {
-	if ((data->pl_tx_y) % 20 == 0 && data->map[data->pl_y - 1][data->pl_x] == '1')
+	if ((data->pl_tx_y) % TX_L == 0 && data->map[data->pl_y - 1][data->pl_x] == '1')
 		return ;
-	if ((data->pl_tx_y) % 20 == 0 && (data->pl_tx_x) % 20 != 0 && (data->map[data->pl_y - 1][data->pl_x] == '1' || data->map[data->pl_y - 1][data->pl_x - 1] == '1'))
+	if ((data->pl_tx_y) % TX_L == 0 && (data->pl_tx_x) % TX_L != 0 && (data->map[data->pl_y - 1][data->pl_x] == '1' || data->map[data->pl_y - 1][data->pl_x - 1] == '1'))
 		return ;
-	else if ((data->pl_tx_y) % 20 == 0 && data->map[data->pl_y - 1][data->pl_x] == '0')
+	else if ((data->pl_tx_y) % TX_L == 0 && data->map[data->pl_y - 1][data->pl_x] == '0')
 	{
 		data->map[data->pl_y - 1][data->pl_x] = data->player;
 		data->map[data->pl_y][data->pl_x] = '0';
@@ -76,23 +74,21 @@ void	move_up(t_data *data)
 	}
 	//draw_text(data);
 	draw_map(data->map, data->map_h, data->map_l, data);
-	data->pl_tx_y -= 10;
-	data->ray.y -= 10;
-	draw_circle(data, 10, data->pl_tx_x + 10, data->pl_tx_y + 10, 0xFF0000);
-	//draw_line_in_direction(data, data->pl_tx_x + 10, data->pl_tx_y + 10, data->pa, 50);
-	//draw_line_in_direction(data, data->pl_tx_x, data->pl_tx_y, data->dir.x, data->dir.y, 0xFF0000);
-	dda(data, data->ray.x, data->ray.y, 0xFF0000);
+	data->pl_tx_y -= TX_L/2;
+	data->ray.y -= TX_L/2;
+	draw_circle(data, TX_L/2, data->pl_tx_x + TX_L/2, data->pl_tx_y + TX_L/2, 0xFF0000);
+    ray_till_wall(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-	//printf("pl y --> %d\npl tx y / 20 --> %d\n", data->pl_y, (data->pl_tx_y) % 20);
+	//printf("pl y --> %d\npl tx y / TX_L --> %d\n", data->pl_y, (data->pl_tx_y) % 20);
 }
 
 void	move_right(t_data *data)
 {
-	if ((data->pl_tx_x) % 20 == 0 && data->map[data->pl_y][data->pl_x + 1] == '1')
+	if ((data->pl_tx_x) % TX_L == 0 && data->map[data->pl_y][data->pl_x + 1] == '1')
 		return ;
-	if ((data->pl_tx_x) % 20 == 0 && (data->pl_tx_y) % 20 != 0 && data->map[data->pl_y + 1][data->pl_x + 1] == '1')
+	if ((data->pl_tx_x) % TX_L == 0 && (data->pl_tx_y) % TX_L != 0 && data->map[data->pl_y + 1][data->pl_x + 1] == '1')
 		return ;
-	else if ((data->pl_tx_x) % 20 == 0 && data->map[data->pl_y][data->pl_x + 1] == '0')
+	else if ((data->pl_tx_x) % TX_L == 0 && data->map[data->pl_y][data->pl_x + 1] == '0')
 	{
 		data->map[data->pl_y][data->pl_x + 1] = data->player;
 		data->map[data->pl_y][data->pl_x] = '0';
@@ -100,23 +96,21 @@ void	move_right(t_data *data)
 	}
 	//draw_text(data);
 	draw_map(data->map, data->map_h, data->map_l, data);
-	data->pl_tx_x += 10;
-	data->ray.x += 10;
-	draw_circle(data, 10, data->pl_tx_x + 10, data->pl_tx_y + 10, 0xFF0000);
-	//draw_line_in_direction(data, data->pl_tx_x, data->pl_tx_y, data->dir.x, data->dir.y, 0xFF0000);
-	//draw_line_in_direction(data, data->pl_tx_x + 10, data->pl_tx_y + 10, data->pa, 50);
-	dda(data, data->ray.x, data->ray.y, 0xFF0000);
+	data->pl_tx_x += TX_L/2;
+	data->ray.x += TX_L/2;
+	draw_circle(data, TX_L/2, data->pl_tx_x + TX_L/2, data->pl_tx_y + TX_L/2, 0xFF0000);
+    ray_till_wall(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-	//printf("pl y --> %d\npl tx y / 20 --> %d\n", data->pl_y, (data->pl_tx_y) % 20);
+	//printf("pl y --> %d\npl tx y / TX_L --> %d\n", data->pl_y, (data->pl_tx_y) % 20);
 }
 
 void	move_left(t_data *data)
 {
-	if ((data->pl_tx_x) % 20 == 0 && data->map[data->pl_y][data->pl_x - 1] == '1')
+	if ((data->pl_tx_x) % TX_L == 0 && data->map[data->pl_y][data->pl_x - 1] == '1')
 		return ;
-	if ((data->pl_tx_y) % 20 != 0 && data->map[data->pl_y + 1][data->pl_x - 1] == '1')
+	if ((data->pl_tx_y) % TX_L != 0 && data->map[data->pl_y + 1][data->pl_x - 1] == '1')
 		return ;
-	else if ((data->pl_tx_x) % 20 != 0 && data->map[data->pl_y][data->pl_x - 1] == '0')
+	else if ((data->pl_tx_x) % TX_L != 0 && data->map[data->pl_y][data->pl_x - 1] == '0')
 	{
 		data->map[data->pl_y][data->pl_x - 1] = data->player;
 		data->map[data->pl_y][data->pl_x] = '0';
@@ -124,43 +118,63 @@ void	move_left(t_data *data)
 	}
 	//draw_text(data);
 	draw_map(data->map, data->map_h, data->map_l, data);
-	data->pl_tx_x -= 10;
-	data->ray.x -= 10;
-	draw_circle(data, 10, data->pl_tx_x + 10, data->pl_tx_y + 10, 0xFF0000);
-	//draw_line_in_direction(data, data->pl_tx_x + 10, data->pl_tx_y + 10, data->pa, 50);
-	dda(data, data->ray.x, data->ray.y, 0xFF0000);
+	data->pl_tx_x -= TX_L/2;
+	data->ray.x -= TX_L/2;
+	draw_circle(data, TX_L/2, data->pl_tx_x + TX_L/2, data->pl_tx_y + TX_L/2, 0xFF0000);
+    ray_till_wall(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-	//printf("pl y --> %d\npl tx y / 20 --> %d\n", data->pl_y, (data->pl_tx_y) % 20);
+	//printf("pl y --> %d\npl tx y / TX_L --> %d\n", data->pl_y, (data->pl_tx_y) % 20);
 }
 
 void	move_angle_l(t_data *data)
 {
-	data->pa -= 0.1;
+	data->pa -= M_PI/24;
 	if (data->pa < 0)
 		data->pa += 2 * M_PI;
-	data->ray.x = data->pl_tx_x + 10 + 50 * cos(data->pa);
-	data->ray.y = data->pl_tx_y + 10 + 50 * sin(data->pa);
-	printf("x is %.0f  y is %.0f\n", data->ray.x, data->ray.y);
+	data->ray.x = data->pl_tx_x + TX_L/2 + 50 * cos(data->pa);
+	data->ray.y = data->pl_tx_y + TX_L/2 + 50 * sin(data->pa);
+	//printf("x is %.0f  y is %.0f\n", data->ray.x, data->ray.y);
 	draw_map(data->map, data->map_h, data->map_l, data);
-	draw_circle(data, 10, data->pl_tx_x + 10, data->pl_tx_y + 10, 0xFF0000);
-	dda(data, data->ray.x, data->ray.y, 0xFF0000);
-	//draw_line_in_direction(data, data->pl_tx_x + 10, data->pl_tx_y + 10, data->pa, 50);
+	draw_circle(data, TX_L/2, data->pl_tx_x + TX_L/2, data->pl_tx_y + TX_L/2, 0xFF0000);
+	if (data->pa > 0.00 - 0.1 && data->pa < 0.00 + 0.1)
+	{
+		printf("PA IS %.2f\n", data->pa);
+		mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+		return;
+	}
+	if ((data->pa > M_PI - 0.1 && data->pa < M_PI + 0.1))
+	{
+		mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+		return;
+	}
+	ray_till_wall(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 	return ;
 }
 
 void	move_angle_r(t_data *data)
 {
-	data->pa += 0.1;
+	data->pa += M_PI/24;
 	if (data->pa > 2 * M_PI)
 		data->pa -= 2 * M_PI;
-	data->ray.x = data->pl_tx_x + 10 + 50 * cos(data->pa);
-	data->ray.y = data->pl_tx_y + 10 + 50 * sin(data->pa);
+	data->ray.x = data->pl_tx_x + TX_L/2 + 50 * cos(data->pa);
+	data->ray.y = data->pl_tx_y + TX_L/2 + 50 * sin(data->pa);
 	draw_map(data->map, data->map_h, data->map_l, data);
-	draw_circle(data, 10, data->pl_tx_x + 10, data->pl_tx_y + 10, 0xFF0000);
-	dda(data, data->ray.x, data->ray.y, 0xFF0000);
-	//draw_line_in_direction(data, data->pl_tx_x + 10, data->pl_tx_y + 10, data->pa, 50);
-	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);	return ;
+	draw_circle(data, TX_L/2, data->pl_tx_x + TX_L/2, data->pl_tx_y + TX_L/2, 0xFF0000);
+	if ((data->pa > M_PI - 0.1 && data->pa < M_PI + 0.1))
+	{
+		mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+		return;
+	}
+	if (data->pa > 0.00 - 0.1 && data->pa < 0.00 + 0.1)
+	{
+		printf("PA IS %.2f\n", data->pa);
+		mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+		return;
+	}
+	ray_till_wall(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+	return ;
 }
 
 int	ft_action(int key, t_data *data)
@@ -177,8 +191,8 @@ int	ft_action(int key, t_data *data)
 		move_angle_l(data);
 	else if (key == ARROW_R)
 		move_angle_r(data);
-	// printf("pl y --> %d\npl tx y / 20 --> %d\n", data->pl_y, (data->pl_tx_y - 100) % 20);
-	// printf("pl x --> %d\npl tx x / 20 --> %d\n\n", data->pl_x, (data->pl_tx_x - 50) % 20);
+	// printf("pl y --> %d\npl tx y / TX_L --> %d\n", data->pl_y, (data->pl_tx_y - 100) % 20);
+	// printf("pl x --> %d\npl tx x / TX_L --> %d\n\n", data->pl_x, (data->pl_tx_x - 50) % 20);
 	return (0);
 }
 
@@ -219,8 +233,8 @@ void dda(t_data *data, float x2, float y2, int color)
     float steps;
     int	i = 0;
 
-    dx = data->pl_tx_x + 10 - x2;
-    dy = data->pl_tx_y + 10 - y2;
+    dx = data->pl_tx_x + TX_L/2 - x2;
+    dy = data->pl_tx_y + TX_L/2 - y2;
     if (fabs(dx) > fabs(dy))
         steps = fabs(dx);
     else
@@ -235,42 +249,4 @@ void dda(t_data *data, float x2, float y2, int color)
         i++;
     }
     return ;
-}
-
-void draw_line_in_direction(t_data *data, int x0, int y0, float direction, float length)
-{
-    float x = (float)x0;
-    float y = (float)y0;
-    float xinc = length * cos(direction);
-    float yinc = length * sin(direction);
-
-	// dda(data, )
-	// printf("y is %.1f\ny inc is %.1f\n", y, yinc);
-    while (x != x0 + xinc || y != y0 - yinc)
-    {
-		my_mlx_pixel_put(data, x, y, 0xFf0000);
-        //x ++;F
-        y--;
-    }
-}
-
-void dda_angle_v(t_data *data, float radian, float length, int color)
-{
-    float x2 = (data->pl_tx_x + 10) + length * cos(radian);
-    float y2 = (data->pl_tx_y + 10) + length * sin(radian);
-    float dx = x2 - (data->pl_tx_x + 10);
-    float dy = y2 - (data->pl_tx_y + 10);
-    float xinc = dx / length;
-    float yinc = dy / length;
-    int steps = length;
-    int i = 0;
-
-    while (i < steps)
-    {
-        my_mlx_pixel_put(data, (int)round(data->pl_tx_x), (int)round(data->pl_tx_y), color);
-        data->pl_tx_x += xinc;
-        data->pl_tx_y += yinc;
-        i++;
-    }
-    return;
 }

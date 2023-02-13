@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/06 04:39:46 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/09 19:46:49 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 # define TX_L 40
+# define MOVE 5
 
 # ifdef __APPLE__
 #  define ESC 53
@@ -59,12 +60,12 @@ enum {
 typedef struct	s_vec {
 	int		x;
 	int		y;
-	float	rad;
+	double	rad;
 }				t_vec;
 
 typedef struct	s_ray {
-	float		x;
-	float		y;
+	double		x;
+	double		y;
 	int		distance;
 }				t_ray;
 
@@ -83,9 +84,9 @@ typedef struct s_data
 	int		pl_y;
 	int		pl_tx_x;
 	int		pl_tx_y;
-	float	pdx;
-	float	pdy;
-	float	pa;
+	double	pdx;
+	double	pdy;
+	double	pa;
 	int		map_h;
 	int		map_l;
 	char	**map;
@@ -121,8 +122,8 @@ void 	draw_map(char **map, int rows, int cols, t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	ft_direction(t_data *data, char player);
 void	draw_ray(t_data *data, int x0, int y0, int x1, int y1, int color);
-void	dda(t_data *data, float x2, float y2, int color);
-void 	get_point_at_distance(float player_x, float player_y, float direction, t_data *data);
+void	dda(t_data *data, double x2, double y2, int color);
+void 	get_point_at_distance(double player_x, double player_y, double direction, t_data *data);
 void ray_till_wall(t_data *data);
 
 //UTILS

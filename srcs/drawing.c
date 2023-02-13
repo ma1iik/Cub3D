@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:17 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/06 09:46:12 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/10 17:14:11 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void draw_char(char **map, int rows, int cols, t_data *data)
             if (ft_ischar(map[i][j]))
 			{
                 data->player = map[i][j];
-                data->pl_tx_y = y;
-                data->pl_tx_x = x;
+                data->pl_tx_y = y + TX_L/2;
+                data->pl_tx_x = x + TX_L/2;
                 ft_direction(data, map[i][j]);
 				draw_circle(data,  TX_L/2, x + TX_L/2, y + TX_L/2, 0xFF0000);
 				return ;
@@ -85,7 +85,7 @@ void draw_char(char **map, int rows, int cols, t_data *data)
     }
 }
 
-void get_point_at_distance(float player_x, float player_y, float direction, t_data *data)
+void get_point_at_distance(double player_x, double player_y, double direction, t_data *data)
 {
     data->ray.x = player_x + 50 * cos(direction);
     data->ray.y = player_y + 50 * sin(direction);
@@ -94,12 +94,12 @@ void get_point_at_distance(float player_x, float player_y, float direction, t_da
 void ray_till_wall(t_data *data)
 {
     int     r;
-    float rx;
-    float ry;
-    float xo;
-    float yo;
+    double rx;
+    double ry;
+    double xo;
+    double yo;
     int dof;
-    float atan;
+    double atan;
     int mx;
     int my;
     
@@ -110,20 +110,20 @@ void ray_till_wall(t_data *data)
         atan = -1 / tan(data->pa);
         if (data->pa < M_PI)
         {
-            printf("looking down\n");
-            ry = (int)((((round(data->pl_tx_y) / TX_L)) * TX_L) + TX_L);
+            //printf("looking down\n");
+            ry = (int)((((round(data->pl_tx_y) / TX_L)) * TX_L)  - TX_L/2);
             // ry = (int)((((round(data->pl_tx_y) / TX_L)) * TX_L));
-            rx = ((data->pl_tx_y + TX_L/2) - ry) * atan + data->pl_tx_x + TX_L/2;
-            printf("starting rx[%.0f]ry[%.0f]\n", rx, ry);
+            rx = ((data->pl_tx_y) - ry) * atan + data->pl_tx_x;
+            //printf("starting rx[%.0f]ry[%.0f]\n", rx, ry);
             yo = TX_L;
             xo = - yo * atan;
         }
         else if (data->pa > M_PI)
         {
-            printf("looking up\n");
-            ry = (int)((((round(data->pl_tx_y - TX_L) / TX_L)) * TX_L) + TX_L);
-            rx = ((data->pl_tx_y + TX_L/2) - ry) * atan + data->pl_tx_x + TX_L/2;
-            printf("starting rx[%.0f]ry[%.0f]\n", rx, ry);
+            //printf("looking up\n");
+            ry = (int)((((round(data->pl_tx_y - TX_L) / TX_L)) * TX_L) + TX_L/2);
+            rx = ((data->pl_tx_y) - ry) * atan + data->pl_tx_x;
+            //printf("starting rx[%.0f]ry[%.0f]\n", rx, ry);
             //my_mlx_pixel_put(data, rx, ry, 0xFF0000);
              yo = -TX_L;
              xo = - yo * atan;
@@ -148,8 +148,8 @@ void ray_till_wall(t_data *data)
                 dof = 30;
                 if(data->pa > 0 && data->pa < M_PI)
                     ry -= TX_L;
-                printf("walls found at mx[%d]my[%d]\n", mx, my);
-                printf("walls found at rx[%.0f]ry[%.0f]\n", rx, ry);
+                //printf("walls found at mx[%d]my[%d]\n", mx, my);
+                //printf("walls found at rx[%.0f]ry[%.0f]\n", rx, ry);
                 break ;
             }
             else
@@ -183,8 +183,7 @@ void ray_till_wall(t_data *data)
         }
        // printf("mx[%d]my[%d]\n", mx * TX_L - 10, my * TX_L);
         // printf("mx[%d]my[%d]\n", mx, my);
-        printf("rx[%.0f]ry[%.0f]\n", rx, ry);
-        printf("pa is %.2f\n\n", data->pa);
+        //printf("rx[%.0f]ry[%.0f]\n", rx, ry);
         dda(data, rx, ry, 0xFF0000);
         mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
     }
@@ -198,6 +197,8 @@ void init_draw(t_data *data)
 	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel, &data->img.line_length, &data->img.endian);
 	draw_map(data->map, data->map_h, data->map_l, data);
 	draw_char(data->map, data->map_h, data->map_l, data);
+    printf("pl y --> %dpl x -->%d\n", data->pl_tx_y, data->pl_tx_x);
+	printf("y --> %dx -->%d\n", data->pl_y, data->pl_x);
     //my_mlx_pixel_put(data, data->ray.x, data->ray.y, 0xFF0000);
     //dda(data, data->ray.x, data->ray.y, 0xFF0000);
     ray_till_wall(data);

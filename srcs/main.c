@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 01:27:23 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/06 04:07:01 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/08 18:41:33 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,26 +154,26 @@ void	ft_direction(t_data *data, char player)
 		data->pa = M_PI;
 	}
 	// printf("x is %d\ny is %d\n", data->dir.x, data->dir.y);
-	get_point_at_distance(data->pl_tx_x + TX_L/2, data->pl_tx_y + TX_L/2, data->pa, data);
+	get_point_at_distance(data->pl_tx_x, data->pl_tx_y, data->pa, data);
 	return ;
 }
 
-void find_hit_point(t_data *data, float x1, float y1, float angle)
+void find_hit_point(t_data *data, double x1, double y1, double angle)
 {
     int map_x, map_y;
-    float x2, y2;
+    double x2, y2;
 
     // Finding the map grid cell where the player is located
     map_x = (int)(x1 / TX_L);
     map_y = (int)(y1 / TX_L);
 
     // Calculating the maximum distance a ray can travel in x and y direction
-    float delta_x = sqrt(TX_L * TX_L + (y1 - (map_y * TX_L)) * (y1 - (map_y * TX_L)));
-    float delta_y = sqrt(TX_L * TX_L + (x1 - (map_x * TX_L)) * (x1 - (map_x * TX_L)));
+    double delta_x = sqrt(TX_L * TX_L + (y1 - (map_y * TX_L)) * (y1 - (map_y * TX_L)));
+    double delta_y = sqrt(TX_L * TX_L + (x1 - (map_x * TX_L)) * (x1 - (map_x * TX_L)));
 
     // Initializing the distance traveled in x and y direction
-    float dist_x = 0;
-    float dist_y = 0;
+    double dist_x = 0;
+    double dist_y = 0;
 
     // Finding the hit point by incrementing the distance traveled in x and y direction until it hits a wall
     while (data->map[map_y][map_x] == 0)

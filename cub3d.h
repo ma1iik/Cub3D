@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/09 19:46:49 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/19 04:34:11 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define HEIGHT 1080
 # define TX_L 40
 # define MOVE 5
+# define FOV 60
 
 # ifdef __APPLE__
 #  define ESC 53
@@ -124,7 +125,8 @@ void	ft_direction(t_data *data, char player);
 void	draw_ray(t_data *data, int x0, int y0, int x1, int y1, int color);
 void	dda(t_data *data, double x2, double y2, int color);
 void 	get_point_at_distance(double player_x, double player_y, double direction, t_data *data);
-void ray_till_wall(t_data *data);
+void ray_till_wall_h(t_data *data);
+void ray_till_wall_v(t_data *data);
 
 //UTILS
 int		ft_ischar(char c);

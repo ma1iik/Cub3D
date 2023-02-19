@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:15:21 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/13 16:57:22 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/17 22:24:59 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void move_up(t_data *data)
 	data->pl_tx_y -= MOVE;
 	data->ray.y -= MOVE;
 	draw_circle(data, TX_L/2, data->pl_tx_x, data->pl_tx_y, 0xFF0000);
-	ray_till_wall(data);
+	ray_till_wall_v(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 	//printf("pl y --> %d\npl tx y / TX_L --> %d\n", data->pl_y, (data->pl_tx_y) % 20);
 }
@@ -106,7 +106,7 @@ void move_down(t_data *data)
     data->pl_tx_y += MOVE;
     data->ray.y += MOVE;
     draw_circle(data, TX_L/2, data->pl_tx_x, data->pl_tx_y, 0xFF0000);
-    ray_till_wall(data);
+    ray_till_wall_v(data);
     mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 }
 
@@ -148,7 +148,7 @@ void move_right(t_data *data)
     data->pl_tx_x += MOVE;
     data->ray.x += MOVE;
     draw_circle(data, TX_L/2, data->pl_tx_x, data->pl_tx_y, 0xFF0000);
-    ray_till_wall(data);
+    ray_till_wall_v(data);
     mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
     //printf("pl y --> %d\npl tx y / TX_L --> %d\n", data->pl_y, (data->pl_tx_y) % 20);
 }
@@ -185,64 +185,39 @@ void	move_left(t_data *data)
 	data->pl_tx_x -= MOVE;
 	data->ray.x -= MOVE;
 	draw_circle(data, TX_L/2, data->pl_tx_x, data->pl_tx_y, 0xFF0000);
-    ray_till_wall(data);
+    ray_till_wall_v(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 	//printf("pl y --> %d\npl tx y / TX_L --> %d\n", data->pl_y, (data->pl_tx_y) % 20);
 }
 
-void	move_angle_l(t_data *data)
+void	move_angle_r(t_data *data)
 {
 	printf("pa beofre is %.2f\n", data->pa);
 	if (data->pa > 0.0 - 0.01 && data->pa < 0.0 + 0.01)
 		data->pa = 2 * M_PI;
 	data->pa -= M_PI/24;
 	printf("palater is %.2f\n\n", data->pa);
-	data->ray.x = data->pl_tx_x + 50 * cos(data->pa);
-	data->ray.y = data->pl_tx_y + 50 * sin(data->pa);
 	//printf("x is %.0f  y is %.0f\n", data->ray.x, data->ray.y);
 	draw_map(data->map, data->map_h, data->map_l, data);
 	draw_circle(data, TX_L/2, data->pl_tx_x, data->pl_tx_y, 0xFF0000);
-	if (data->pa > 0.00 - 0.1 && data->pa < 0.00 + 0.1)
-	{
-		printf("PA IS %.2f\n", data->pa);
-		mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-		return;
-	}
-	if ((data->pa > M_PI - 0.1 && data->pa < M_PI + 0.1))
-	{
-		mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-		return;
-	}
-	ray_till_wall(data);
+	ray_till_wall_v(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 	return ;
 }
 
-void	move_angle_r(t_data *data)
+void	move_angle_l(t_data *data)
 {
 	data->pa += M_PI/24;
 	printf("pa beofre is %.2f\n", data->pa);
-	if (data->pa > 2 * M_PI - 0.01 && data->pa < 2 * M_PI + 0.01)
+	if ((data->pa < 2 * M_PI + 0.01 && data->pa > 2 * M_PI - 0.01))
 	{
+		printf("here\n");
 		data->pa = 0;
 	}
 	printf("palater is %.2f\n\n", data->pa);
-	data->ray.x = data->pl_tx_x + 50 * cos(data->pa);
-	data->ray.y = data->pl_tx_y + 50 * sin(data->pa);
 	draw_map(data->map, data->map_h, data->map_l, data);
 	draw_circle(data, TX_L/2, data->pl_tx_x, data->pl_tx_y, 0xFF0000);
-	if ((data->pa > M_PI - 0.1 && data->pa < M_PI + 0.1))
-	{
-		mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-		return;
-	}
-	if (data->pa > 0.00 - 0.1 && data->pa < 0.00 + 0.1)
-	{
-		printf("PA IS %.2f\n", data->pa);
-		mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-		return;
-	}
-	ray_till_wall(data);
+	ray_till_wall_v(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 	return ;
 }

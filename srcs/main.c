@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 01:27:23 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/08 18:41:33 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/02/17 22:24:59 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,15 +139,15 @@ void	ft_direction(t_data *data, char player)
 
 	if (player == 'N')
 	{
-		data->pa = 3 * M_PI / 2;
+		data->pa = M_PI / 2;
 	}
 	else if (player == 'E')
 	{
-		data->pa = 0;
+		data->pa = 0.00;
 	}
 	else if (player == 'S')
 	{
-		data->pa = M_PI / 2;
+		data->pa = 3 * M_PI / 2;
 	}
 	else if (player == 'W')
 	{
@@ -225,7 +225,7 @@ int main(int ac, char **av)
 	init_draw(data);
 	//find_hit_point(data, data->pl_tx_x, data->pl_tx_y, data->pa);
 	//printf("x=%d  y=%d\n", data->pl_tx_x, data->pl_tx_y);
-	//ray_till_wall(data);
+	//ray_till_wall_v(data);
 	//printf("y is --> %d\nx is --> %d\n", data->pl_tx_y, data->pl_tx_x);
 	//printf("pl y --> %d\npl tx y / 20 --> %d\n", data->pl_y, (data->pl_tx_y - 100) % 20);
 	mlx_hook(data->win, ON_DESTROY, 0, ft_exit, NULL);

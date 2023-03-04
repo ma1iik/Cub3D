@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/19 04:34:11 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/04 08:38:28 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 # define RIGHT 1
 # define WIDTH 1920
 # define HEIGHT 1080
-# define TX_L 40
-# define MOVE 5
-# define FOV 60
+# define TX_L 80
+# define MOVE 2.5
+# define FOV 1.0472
 
 # ifdef __APPLE__
 #  define ESC 53
@@ -65,9 +65,15 @@ typedef struct	s_vec {
 }				t_vec;
 
 typedef struct	s_ray {
-	double		x;
-	double		y;
-	int		distance;
+	double	ay;
+	double 	ax;
+	double	by;
+	double 	bx;
+	double	x_fnl;
+	double	y_fnl;
+	double		distance;
+	double	plane;
+	double	wall_h;
 }				t_ray;
 
 typedef struct	s_img {
@@ -83,10 +89,10 @@ typedef struct s_data
 	char	player;
 	int		pl_x;
 	int		pl_y;
-	int		pl_tx_x;
-	int		pl_tx_y;
-	double	pdx;
-	double	pdy;
+	double	pl_tx_x;
+	double	pl_tx_y;
+	double	x_fnl;
+	double	y_fnl;
 	double	pa;
 	int		map_h;
 	int		map_l;
@@ -95,7 +101,8 @@ typedef struct s_data
 	void	*mlx;
 	void	*win;
 	t_img	img;
-	t_ray	ray;
+	t_ray	ray[WIDTH];
+	double	r_distance;
 }				t_data;
 
 //PARSING
@@ -124,16 +131,21 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	ft_direction(t_data *data, char player);
 void	draw_ray(t_data *data, int x0, int y0, int x1, int y1, int color);
 void	dda(t_data *data, double x2, double y2, int color);
-void 	get_point_at_distance(double player_x, double player_y, double direction, t_data *data);
-void ray_till_wall_h(t_data *data);
-void ray_till_wall_v(t_data *data);
+t_ray	ray_till_wall_h(t_data *data, double pa);
+t_ray	ray_till_wall_v(t_data *data, double pa);
+void    cast_rays1(t_data *data);
+double  ft_cor_dis(t_data *data, t_ray *ray, double agl, int x);
+void    compare_a_b_cordis(t_data *data, t_ray *ray);
 
 //UTILS
 int		ft_ischar(char c);
 int		ft_isspace(int c);
 int		ft_exit(void);
+double	calc_dist(double px, double py, double rx, double ry);
+int 	check_wall_around(t_data *data, int i, int j, int radius);
 //
-int	ft_release(int key);
-int	ft_action(int key, t_data *data);
+int		ft_release(int key);
+int		ft_action(int key, t_data *data);
+void	change_pos(t_data *data, int j, int i);
 
 #endif

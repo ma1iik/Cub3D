@@ -37,7 +37,6 @@ void ray_till_wall_h(t_data *data)
         }
         else if (data->pa == 0 || data->pa == M_PI)
         {
-            printf("looking straight\n");
             rx = data->pl_tx_x;
             ry = data->pl_tx_y;
             dof = 30;
@@ -63,24 +62,20 @@ void ray_till_wall_h(t_data *data)
             {
                 if (rx + xo < 0 )
                 {
-                    printf("here1\n");
                     rx = 0;
                 }
                 else if (rx + xo > data->map_l * TX_L)
                 {
-                    printf("here2\n");
                     rx = data->map_l * TX_L;
                 }
                 else
                     rx += xo;
                 if (ry + yo < 0)
                 {
-                    printf("here3\n");
                     ry = 0;
                 }
                 else if (ry+ yo > data->map_h * TX_L)
                 {
-                    printf("here4\n");
                     ry = data->map_h * TX_L;
                 }
                 else

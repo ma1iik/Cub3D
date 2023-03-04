@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 03:23:53 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/01/31 02:21:56 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/02 01:48:09 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,15 @@ int	ft_ischar(char c)
 int	ft_exit(void)
 {
 	exit(0);
+}
+
+void	change_pos(t_data *data, int j, int i)
+{
+	int	ii;
+	int jj;
+
+	data->map[(int)data->pl_tx_y / TX_L][(int)data->pl_tx_x / TX_L] = '0';
+	data->map[j/TX_L][i/TX_L] = data->player;
+	data->pl_x = i / TX_L;
+	data->pl_y = j / TX_L;
 }

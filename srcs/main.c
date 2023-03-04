@@ -3,58 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 01:27:23 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/27 23:44:51 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/04 14:55:07 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-// void mlx_line_put(void *mlx, void *win, int x1, int y1, int x2, int y2, int color)
-// {
-//     int dx, dy, sx, sy, err, e2;
-
-//     dx = abs(x2 - x1);
-//     dy = abs(y2 - y1);
-//     sx = x1 < x2 ? 1 : -1;
-//     sy = y1 < y2 ? 1 : -1;
-//     err = dx - dy;
-
-//     while (1) {
-//         mlx_pixel_put(mlx, win, x1, y1, color);
-//         if (x1 == x2 && y1 == y2) break;
-//         e2 = 2 * err;
-//         if (e2 > -dy) {
-//             err -= dy;
-//             x1 += sx;
-//         }
-//         if (e2 < dx) {
-//             err += dx;
-//             y1 += sy;
-//         }
-//     }
-// }
-
 int	ft_fill_map(t_data *data, int fd)
 {
-    char	*line;
-    int		gnl;
+	char	*l;
+	int		gnl;
 	int		i;
-	
+
 	gnl = 1;
 	i = 0;
 	while (gnl > 0)
 	{
-		gnl = get_next_line(fd, &line);
-		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E' || line[0] == 'F' || line[0] == 'C' || line[0] == '\n' || line[0] == '\0')
+		gnl = get_next_line(fd, &l);
+		if (l[0] == 'N' || l[0] == 'S' || l[0] == 'W' || l[0] == 'E'
+			|| l[0] == 'F' || l[0] == 'C' || l[0] == '\n' || l[0] == '\0')
 		{
-			free (line);
-			continue;
+			free (l);
+			continue ;
 		}
-		data->map[i++] = ft_strdup(line);
-		free (line);
+		data->map[i++] = ft_strdup(l);
+		free (l);
 	}
 	if (ft_fill_map2(data) == WRONG)
 		return (WRONG);
@@ -109,15 +85,9 @@ int	ft_fill_map3(t_data *data)
 		while (data->map[i][j])
 		{
 			if (data->map[i][j] == ' ')
-			{
-				tmp[j] = '*';
-				j++;
-			}
+				tmp[j++] = '*';
 			else
-			{
-				tmp[j] = data->map[i][j];
-				j++;
-			}
+				tmp[j++] = data->map[i][j];
 		}
 		tmp[j] = '\0';
 		data->map_star[i] = tmp;
@@ -130,13 +100,13 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->img.addr + (y * data->img.line_length + x * (data->img.bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	dst = data->img.addr + (y * data->img.line_length + x
+			* (data->img.bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
 void	ft_direction(t_data *data, char player)
 {
-
 	if (player == 'N')
 	{
 		data->pa = M_PI / 2;
@@ -153,16 +123,15 @@ void	ft_direction(t_data *data, char player)
 	{
 		data->pa = M_PI;
 	}
-	// printf("x is %d\ny is %d\n", data->dir.x, data->dir.y);
 	return ;
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    t_data *data;
+	t_data	*data;
 
 	data = ft_calloc(1, sizeof(t_data));
-    if (ft_parsing(ac, data, av[1]) == WRONG)
+	if (ft_parsing(ac, data, av[1]) == WRONG)
 		return (WRONG);
 	init_draw(data);
 	//find_hit_point(data, data->pl_tx_x, data->pl_tx_y, data->pa);
@@ -174,5 +143,4 @@ int main(int ac, char **av)
 	mlx_hook(data->win, ON_KEYDOWN, 1L<<0, ft_action, data);
 	mlx_key_hook(data->win, ft_release, data);
 	mlx_loop(data->mlx);
-    printf ("ALL GOOD\n");
 }

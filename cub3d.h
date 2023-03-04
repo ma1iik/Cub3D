@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/04 08:38:28 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/04 15:37:01 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	CUB3D_H
+#ifndef CUB3D_H
 # define CUB3D_H
 # include "mlx.h"
 # include <stdlib.h>
@@ -58,25 +58,25 @@ enum {
 	ON_DESTROY = 17
 };
 
-typedef struct	s_vec {
+typedef struct s_vec {
 	int		x;
 	int		y;
 	double	rad;
 }				t_vec;
 
-typedef struct	s_ray {
+typedef struct s_ray {
 	double	ay;
-	double 	ax;
+	double	ax;
 	double	by;
-	double 	bx;
+	double	bx;
 	double	x_fnl;
 	double	y_fnl;
-	double		distance;
+	double	distance;
 	double	plane;
 	double	wall_h;
 }				t_ray;
 
-typedef struct	s_img {
+typedef struct s_img {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -123,26 +123,26 @@ int		ft_first_last_row(t_data *data, char **map);
 int		ft_rowsbetween(t_data *data, char **map);
 
 //INIT and DRAW
-void 	init_draw(t_data *data);
-void 	draw_char(char **map, int rows, int cols, t_data *data);
+void	init_draw(t_data *data);
+void	draw_char(char **map, int rows, int cols, t_data *data);
 void	draw_circle(t_data *data, int rad, int x, int y, int color);
-void 	draw_map(char **map, int rows, int cols, t_data *data);
+void	draw_map(char **map, int rows, int cols, t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	ft_direction(t_data *data, char player);
 void	draw_ray(t_data *data, int x0, int y0, int x1, int y1, int color);
 void	dda(t_data *data, double x2, double y2, int color);
 t_ray	ray_till_wall_h(t_data *data, double pa);
 t_ray	ray_till_wall_v(t_data *data, double pa);
-void    cast_rays1(t_data *data);
-double  ft_cor_dis(t_data *data, t_ray *ray, double agl, int x);
-void    compare_a_b_cordis(t_data *data, t_ray *ray);
+void	cast_rays1(t_data *data);
+double	ft_cor_dis(t_data *data, t_ray *ray, double agl, int x);
+void	compare_a_b_cordis(t_data *data, t_ray *ray);
 
 //UTILS
 int		ft_ischar(char c);
 int		ft_isspace(int c);
 int		ft_exit(void);
 double	calc_dist(double px, double py, double rx, double ry);
-int 	check_wall_around(t_data *data, int i, int j, int radius);
+int		check_wall_around(t_data *data, int i, int j, int radius);
 //
 int		ft_release(int key);
 int		ft_action(int key, t_data *data);

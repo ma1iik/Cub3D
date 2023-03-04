@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:19:02 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/02/04 08:12:08 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/04 15:37:25 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_checkways(int x, int y, char **map, t_data *data)
 
 	i = 0;
 	ft_checkways1(x, y, map, data);
-	while(map[i])
+	while (map[i])
 	{
 		j = 0;
 		while (map[i][j])
@@ -32,12 +32,14 @@ int	ft_checkways(int x, int y, char **map, t_data *data)
 		}
 		i++;
 	}
-    return (1);
+	return (1);
 }
 
 int	ft_checkwalls(t_data *data)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	// while (data->map_star[i])
 	//  	printf("%s\n", data->map_star[i++]);
 	if (ft_first_last_row(data, data->map_star) == WRONG)
@@ -49,57 +51,60 @@ int	ft_checkwalls(t_data *data)
 	return (RIGHT);
 }
 
-
-int    ft_checkwalls1(t_data *data, char **maps)
+int	ft_checkwalls1(t_data *data, char **maps)
 {
 	int		x;
 	int		y;
 
-    y = 0;
-    while (maps[y])
-    {
-    	x = 0;
-        while (maps[y][x])
-        {
-            if (maps[y][x] == '*')
-            {
-                if (y > 0 && (maps[y - 1][x] == '0' || ft_ischar(maps[y - 1][x])))
-                    return(ft_error(7));
-                if (x <= data->map_l && (maps[y][x + 1] == '0' || ft_ischar(maps[y][x + 1])))
-                    return(ft_error(7));
-                if (y < data->map_h - 1 && (maps[y + 1][x] == '0' || ft_ischar(maps[y + 1][x])))
-                    return(ft_error(7));
-                if (x > 0 && (maps[y][x - 1] == '0' || ft_ischar(maps[y][x - 1])))
-                    return(ft_error(7));
-            }
+	y = 0;
+	while (maps[y])
+	{
+		x = 0;
+		while (maps[y][x])
+		{
+			if (maps[y][x] == '*')
+			{
+				if (y > 0 && (maps[y - 1][x] == '0'
+					|| ft_ischar(maps[y - 1][x])))
+					return (ft_error(7));
+				if (x <= data->map_l && (maps[y][x + 1] == '0'
+					|| ft_ischar(maps[y][x + 1])))
+					return (ft_error(7));
+				if (y < data->map_h - 1 && (maps[y + 1][x] == '0'
+					|| ft_ischar(maps[y + 1][x])))
+					return (ft_error(7));
+				if (x > 0 && (maps[y][x - 1] == '0'
+					|| ft_ischar(maps[y][x - 1])))
+					return (ft_error(7));
+			}
 			x++;
-        }
+		}
 		y++;
-    }
+	}
 	return (RIGHT);
 }
 
-int ft_first_last_row(t_data *data, char **map)
+int	ft_first_last_row(t_data *data, char **map)
 {
-    int i;
+	int	i;
 
 	i = 0;
-    while (i < data->map_l)
-    {
-        if (map[0][i] != '1' && map[0][i] != '*')
+	while (i < data->map_l)
+	{
+		if (map[0][i] != '1' && map[0][i] != '*')
 		{
-            return (ft_error(8));
+			return (ft_error(8));
 		}
-        i++;
-    }
-    i = 0;
-    while (i < data->map_l)
-    {
-        if (map[data->map_h - 1][i] != '1' && map[data->map_h - 1][i] != '*')
-            return (ft_error(8));
-        i++;
-    }
-    return (RIGHT);
+		i++;
+	}
+	i = 0;
+	while (i < data->map_l)
+	{
+		if (map[data->map_h - 1][i] != '1' && map[data->map_h - 1][i] != '*')
+			return (ft_error(8));
+		i++;
+	}
+	return (RIGHT);
 }
 
 int	ft_rowsbetween(t_data *data, char **map)

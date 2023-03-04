@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 03:23:53 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/02 01:48:09 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/04 15:34:14 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,19 @@ int	ft_error(int n)
 
 int	ft_mapsize(char *file)
 {
-	int	fd;
-	int	i;
-	char *line;
+	int		fd;
+	int		i;
+	char	*line;
 
 	i = 0;
 	fd = open(file, O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E' || line[0] == '\n' || line[0] == '\0')
+		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W'
+			|| line[0] == 'E' || line[0] == '\n' || line[0] == '\0')
 		{
 			free (line);
-			continue;
+			continue ;
 		}
 		i++;
 		free(line);
@@ -57,7 +58,6 @@ int	ft_mapsize(char *file)
 	close(fd);
 	return (i - 2);
 }
-
 
 int	ft_map_len(t_data *data)
 {
@@ -97,10 +97,10 @@ int	ft_exit(void)
 void	change_pos(t_data *data, int j, int i)
 {
 	int	ii;
-	int jj;
+	int	jj;
 
 	data->map[(int)data->pl_tx_y / TX_L][(int)data->pl_tx_x / TX_L] = '0';
-	data->map[j/TX_L][i/TX_L] = data->player;
+	data->map[j / TX_L][i / TX_L] = data->player;
 	data->pl_x = i / TX_L;
 	data->pl_y = j / TX_L;
 }

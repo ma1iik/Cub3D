@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:17 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/04 15:13:45 by misrailo         ###   ########.fr       */
+/*   Updated: 2023/03/05 18:56:50 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,7 @@ void	draw_wall(t_data *data, t_ray *ray, int x, float wall_h)
 
 void draw_background(t_data *data)
 {
-	int	x,
+	int	x;
 	int	y;
 
 	for (y = 0; y < HEIGHT / 2; y++)

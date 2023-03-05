@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 01:27:23 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/04 14:55:07 by misrailo         ###   ########.fr       */
+/*   Updated: 2023/03/05 18:55:23 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,10 @@ int	ft_fill_map3(t_data *data)
 		while (data->map[i][j])
 		{
 			if (data->map[i][j] == ' ')
-				tmp[j++] = '*';
+				tmp[j] = '*';
 			else
-				tmp[j++] = data->map[i][j];
+				tmp[j] = data->map[i][j];
+			j++;
 		}
 		tmp[j] = '\0';
 		data->map_star[i] = tmp;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:15:21 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/04 15:25:34 by misrailo         ###   ########.fr       */
+/*   Updated: 2023/03/10 17:06:51 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	draw_text(t_data *data)
 		}
 		y++;
 	}
-}
+}	
 
 void	move_up(t_data *data)
 {
@@ -53,11 +53,11 @@ void	move_up(t_data *data)
 	delta_y = (data->y_fnl - data->pl_tx_y) / wl;
 	i = data->pl_tx_x + (delta_x * MOVE);
 	j = data->pl_tx_y + (delta_y * MOVE);
-	if (data->r_distance < (sqrt((pow(data->pl_tx_x - i, 2)
+	if (data->r_distance <= (sqrt((pow(data->pl_tx_x - i, 2)
 					+ pow(data->pl_tx_y - j, 2)))))
 	{
-		i = data->x_fnl;
-		j = data->y_fnl;
+		i = data->x_fnl - (delta_x / 6);
+		j = data->y_fnl - delta_y / 6;
 	}
 	if (check_wall_around(data, i, j, 0) == 0)
 	{

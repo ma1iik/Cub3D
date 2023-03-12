@@ -6,32 +6,54 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 01:27:23 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/05 18:55:23 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/12 18:54:56 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	ft_fill_map(t_data *data, int fd)
+int	ft_fill_map(t_data *data, char *file)
 {
 	char	*l;
 	int		gnl;
 	int		i;
+	int		j;
+	int		fd;
 
 	gnl = 1;
 	i = 0;
-	while (gnl > 0)
+	j = 0;
+	fd = open(file, O_RDONLY);
+	data->map_h = data->m_ll - data->m_fl + 1;
+	printf ("%d height\n", data->map_h);
+	printf ("%d fl\n", data->m_fl);
+	printf ("%d ll\n", data->m_ll);
+	data->map = ft_calloc(sizeof(char *), data->map_h + 1);
+	data->map_star = ft_calloc(sizeof(char *), data->map_h + 1);
+	if (!data->map)
+		return (WRONG);
+	while (gnl >= 0)
 	{
+		//printf("times %d\n", times++);
 		gnl = get_next_line(fd, &l);
-		if (l[0] == 'N' || l[0] == 'S' || l[0] == 'W' || l[0] == 'E'
-			|| l[0] == 'F' || l[0] == 'C' || l[0] == '\n' || l[0] == '\0')
+		//printf("fl[%d] ll[%d]\n", data->m_fl, data->m_ll);
+		if (gnl == 0)
 		{
-			free (l);
-			continue ;
+			if (j >= data->m_fl && j <= data->m_ll)
+			{
+				data->map[i++] = ft_strdup(l);
+			}
+			break;
 		}
-		data->map[i++] = ft_strdup(l);
+		if (j >= data->m_fl && j <= data->m_ll)
+		{
+			data->map[i++] = ft_strdup(l);
+		}
 		free (l);
+		j++;
 	}
+	data->map[i] = '\0';
+	close (fd);
 	if (ft_fill_map2(data) == WRONG)
 		return (WRONG);
 	if (ft_fill_map3(data) == WRONG)

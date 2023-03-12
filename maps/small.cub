@@ -1,11 +1,10 @@
-NO ./tex/north_wall.xpm
-SO ./tex/south_wall.xpm
-WE ./tex/west_wall.xpm
-EA ./tex/east_wall.xpm
+NO ./txtrs/NO.xpm
+SO ./txtrs/SO.xpm
+WE ./txtrs/WE.xpm
+EA ./txtrs/EA.xpm
 
-F 255 , 100 , 0
-C 225 , 255, 255
-
+F 225 , 255, 100
+C 10 , 150 , 100
 
 1111111111111111
 1000000000000001
@@ -14,5 +13,5 @@ C 225 , 255, 255
 1000000E01000001
 1000000000000001
 1000000100000001
-1000000000000001
+1010101000000001
 1111111111111111

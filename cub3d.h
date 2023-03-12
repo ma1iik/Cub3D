@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/05 18:57:37 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/11 20:02:41 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,52 @@ typedef struct s_vec {
 	double	rad;
 }				t_vec;
 
+typedef struct s_txt
+{
+	int		*addr;
+	void	*no;
+	void	*so;
+	void	*ea;
+	void	*we;
+	int		*a_no;
+	int		*a_so;
+	int		*a_ea;
+	int		*a_we;
+	int		*a_fnl;
+	int		bpp;
+	int		line_length;
+	int		size_line;
+	int		endian;
+	int		img_w;
+	int		img_h;
+	char	*no_fn;
+	char	*ea_fn;
+	char	*we_fn;
+	char	*so_fn;
+	int		type;
+	int		l_i;
+	int		no_n;
+	int		ea_n;
+	int		we_n;
+	int		so_n;
+	int		f_n;
+	int		c_n;
+	int		no_bpp;
+	int		no_l;
+	int		no_end;
+	int		so_bpp;
+	int		so_l;
+	int		so_end;
+	int		ea_bpp;
+	int		ea_l;
+	int		ea_end;
+	int		we_bpp;
+	int		we_l;
+	int		we_end;
+	int		txt_x;
+	int		txt_y;
+}	t_txt;
+
 typedef struct s_ray {
 	double	ay;
 	double	ax;
@@ -96,13 +142,23 @@ typedef struct s_data
 	double	pa;
 	int		map_h;
 	int		map_l;
+	int		m_fl;
+	int		m_ll;
 	char	**map;
 	char	**map_star;
 	void	*mlx;
 	void	*win;
 	t_img	img;
 	t_ray	ray[WIDTH];
+	t_txt	texture;
 	double	r_distance;
+	int		w_vertical;
+	double	f_r;
+	double	f_g;
+	double	f_b;
+	double	c_r;
+	double	c_g;
+	double	c_b;
 }				t_data;
 
 //PARSING
@@ -112,7 +168,7 @@ int		ft_error(int n);
 int		ft_mapsize(char *file);
 int		ft_wrongchar(t_data *data);
 int		ft_map_len(t_data *data);
-int		ft_fill_map(t_data *data, int fd);
+int		ft_fill_map(t_data *data, char *file);
 int		ft_fill_map2(t_data *data);
 int		ft_fill_map3(t_data *data);
 int		ft_checkways(int x, int y, char **map, t_data *data);

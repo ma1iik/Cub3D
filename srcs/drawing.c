@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:17 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/12 19:31:57 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/13 00:31:27 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,7 +313,7 @@ void	compare_a_b(t_data *data, t_ray *ray, double agl)
 	ray->distance = ray->distance * cos_ang;
 }
 
-void	draw_wall(t_data *data, t_ray *ray, int x, float wall_h)
+void	draw_wall(t_data *data, t_ray *ray, int x, double wall_h)
 {
 	int	wall_top;
 	int	wall_bottom;
@@ -326,12 +326,11 @@ void	draw_wall(t_data *data, t_ray *ray, int x, float wall_h)
 	// printf("wall top is %d\n", wall_top);
 	if (wall_top < 0)
 		wall_top = 0;
-	data->texture.txt_y = (1.0 - (double)(wall_bottom - wall_top)
-			/ (data->ray->wall_h)) * 64.0;
 		//printf("[%d][%d]\n", data->texture.txt_x, data->texture.txt_y);
 	while (wall_top < wall_bottom && wall_top < 1050)
 	{
-		color = data->texture.a_we[data->texture.txt_x + data->texture.txt_y * 64];
+		data->texture.txt_y = (int)(((double)TX_L / wall_h) * ((double)wall_top -(double)HEIGHT / 2 + wall_h / 2));
+		color = data->texture.a_no[data->texture.txt_x + data->texture.txt_y * 64];
 		mirrored_x = WIDTH - x - 1;
 		my_mlx_pixel_put(data, mirrored_x, wall_top, color);
 		wall_top++;
@@ -386,15 +385,17 @@ void    loop_ext(t_data *data, t_ray *ray, double agl, int x, double cor_dis)
 	find_wall_a(data, ray, agl);
 	find_wall_b(data, ray, agl);
 	compare_a_b(data, ray, agl);
-	ray->plane = (WIDTH/2) / tan(30);
+	ray->plane = (WIDTH/2) / tan(FOV/2);
 	ray->wall_h = abs((int)(TX_L / ray->distance * ray->plane));
 	//dda(data, ray->x_fnl, ray->y_fnl, 0xFF0000);
 }
 
 void	draw_wall_1(t_data *data , t_ray *ray, double agl)
 {
+	double	hit;
 	if (data->w_vertical == 1)
 	{
+		hit = data->pl_tx_y + ray->distance * sin(agl);
 		if (agl < M_PI / 2 && agl > 3 * M_PI * 2)
 		{
 			data->texture.a_fnl = (int *)data->texture.a_ea;
@@ -403,10 +404,11 @@ void	draw_wall_1(t_data *data , t_ray *ray, double agl)
 		{
 			data->texture.a_fnl = (int *)data->texture.a_we;
 		}
-		data->texture.txt_x = fmod(ray->y_fnl / 64.0, 1.0) * 64.0;
+		//data->texture.txt_x = fmod(ray->y_fnl / 64.0, 1.0) * 64.0;
 	}
 	else
 	{
+		hit = data->pl_tx_x + ray->distance * cos(agl);
 		if (agl < M_PI && agl > 0)
 		{
 			data->texture.a_fnl = (int *)data->texture.a_no;
@@ -415,8 +417,9 @@ void	draw_wall_1(t_data *data , t_ray *ray, double agl)
 		{
 			data->texture.a_fnl = (int *)data->texture.a_so;
 		}
-		data->texture.txt_x = fmod(ray->x_fnl / 64.0, 1.0) * 64.0;
+		//data->texture.txt_x = fmod(ray->x_fnl / 64.0, 1.0) * 64.0;
 	}
+	data->texture.txt_x = (int)(TX_L * (hit - floor(hit)));
 }
 
 void    cast_rays1(t_data *data)

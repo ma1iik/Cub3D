@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/11 20:02:41 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/13 10:36:16 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 # define TX_L 64
-# define MOVE 2.5
+# define MOVE 10
 # define FOV 1.0472
 
 # ifdef __APPLE__
@@ -159,6 +159,8 @@ typedef struct s_data
 	double	c_r;
 	double	c_g;
 	double	c_b;
+	double	draw_height;
+	double	wl;
 }				t_data;
 
 //PARSING

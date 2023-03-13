@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:15:21 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/10 17:06:51 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/13 11:45:04 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ void	move_up(t_data *data)
 	delta_y = (data->y_fnl - data->pl_tx_y) / wl;
 	i = data->pl_tx_x + (delta_x * MOVE);
 	j = data->pl_tx_y + (delta_y * MOVE);
+	if (data->r_distance - 20 <= (sqrt((pow(data->pl_tx_x - i, 2) + pow(data->pl_tx_y - j, 2)))))
+		return;
+		
 	if (data->r_distance <= (sqrt((pow(data->pl_tx_x - i, 2)
 					+ pow(data->pl_tx_y - j, 2)))))
 	{
@@ -113,6 +116,9 @@ void	move_left(t_data *data)
 	//printf("dlt y [%.2f] dlt x [%.2f]\n", delta_y, delta_x);
 	i = data->pl_tx_x + (delta_x * MOVE);
 	j = data->pl_tx_y + (delta_y * MOVE);
+	// if (data->r_distance - 20 <= (sqrt((pow(data->pl_tx_x - i, 2) + pow(data->pl_tx_y - j, 2)))))
+	// 	return;
+	
 	if (check_wall_around(data, i, j, 0) == 0)
 	{
 		if (data->pl_tx_x/TX_L != i/TX_L || data->pl_tx_y/TX_L != j / TX_L)

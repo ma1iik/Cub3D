@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 03:23:53 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/15 10:43:05 by misrailo         ###   ########.fr       */
+/*   Updated: 2023/03/15 19:12:17 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 int	ft_error(int n)
 {
 	if (n == 0)
-		printf("Error: Wrong number of arguments\n");
+		printf("Error\nWrong number of arguments\n");
 	else if (n == 1)
-		printf("Error : Wrong extension of map\n");
+		printf("Error\nWrong extension of map\n");
 	else if (n == 2)
-		printf("Error : Map file is a directory\n");
+		printf("Error\nMap file is a directory\n");
 	else if (n == 3)
-		printf("Error : Map file not read properly\n");
+		printf("Error\nMap file not read properly\n");
 	else if (n == 4)
-		printf("Error : Wrong character on map found\n");
+		printf("Error\nWrong character on map found\n");
 	else if (n == 5)
-		printf("Error : Direction utilized in incorrect manner\n");
+		printf("Error\nDirection utilized in incorrect manner\n");
 	else if (n == 6)
-		printf("Error : Impossible to enter area found on the map\n");
+		printf("Error\nImpossible to enter area found on the map\n");
 	else if (n == 7)
-		printf("Error : Hole in the map\n");
+		printf("Error\nHole in the map\n");
 	else if (n == 8)
-		printf("Error : Wall error\n");
+		printf("Error\nWall error\n");
 	else if (n == 9)
-		printf("Error: Parameters invalid\n");
+		printf("Error\nParameters invalid\n");
 	else if (n == 11 || n == 10)
-		printf("Error: Texture path is invalid\n");
+		printf("Error\nTexture path is invalid\n");
 	exit (1);
 	return (WRONG);
 }
@@ -103,18 +103,4 @@ int	ft_ischar(char c)
 		return (0);
 }
 
-int	ft_exit(void)
-{
-	exit(0);
-}
 
-void	change_pos(t_data *data, int j, int i)
-{
-	int	ii;
-	int	jj;
-
-	data->map[(int)data->pl_tx_y / TX_L][(int)data->pl_tx_x / TX_L] = '0';
-	data->map[j / TX_L][i / TX_L] = data->player;
-	data->pl_x = i / TX_L;
-	data->pl_y = j / TX_L;
-}

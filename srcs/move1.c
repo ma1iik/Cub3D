@@ -3,18 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   move1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:15:21 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/15 10:49:59 by misrailo         ###   ########.fr       */
+/*   Updated: 2023/03/15 21:05:52 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	ft_release(int key)
+int	ft_release(int key, t_data *data)
 {
+	int i;
+
+	i = 0;
+	printf ("frei\n");	
+	while (data->map[i]){
+		free(data->map[i++]);
+	}
+	free (data->map);
+	i = 0;
+	while (data->map_star[i])
+		free(data->map_star[i++]);
+	free (data->map_star);
 	if (key == ESC)
+	
 		exit(0);
 	return (0);
 }
@@ -101,7 +114,6 @@ void	move_down(t_data *data)
 	j = data->pl_tx_y + (delta_y * MOVE);
 	if (data->map[j / TX_L][i / TX_L] == '1')
 	{
-		printf("WTF\n");
 		return ;
 	}
 	if (check_wall_around(data, i, j, 0) == 0)

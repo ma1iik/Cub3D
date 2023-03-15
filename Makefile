@@ -6,7 +6,7 @@
 #    By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/03 01:27:28 by ma1iik            #+#    #+#              #
-#    Updated: 2023/02/04 15:11:19 by ma1iik           ###   ########.fr        #
+#    Updated: 2023/03/15 19:36:32 by ma1iik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,20 @@ CFLAGS 			=  -Wall -Wextra -Werror -Wno-unused-variable -g -fsanitize=address
 
 SRCS	=	srcs/main.c \
 			srcs/utils.c \
+			srcs/utils1.c \
 			srcs/drawing.c \
+			srcs/drawing1.c \
+			srcs/drawing2.c \
+			srcs/drawing3.c \
 			srcs/move1.c \
 			srcs/parsing1.c \
-			srcs/parsing2.c
+			srcs/parsing2.c \
+			srcs/parsing3.c \
+			srcs/parsing4.c \
+			srcs/parsing5.c \
+			srcs/parsing6.c \
+			srcs/parsing7.c \
+			srcs/parsing8.c \
 
 OBJS	= ${SRCS:.c=.o}
 

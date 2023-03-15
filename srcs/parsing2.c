@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:19:02 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/10 02:14:03 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/13 20:58:14 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	ft_checkways(int x, int y, char **map, t_data *data)
 
 int	ft_checkwalls(t_data *data)
 {
-	// while (data->map_star[i])
-	//  	printf("%s\n", data->map_star[i++]);
 	if (ft_first_last_row(data, data->map_star) == WRONG)
 		return (WRONG);
 	if (ft_rowsbetween(data, data->map_star) == WRONG)

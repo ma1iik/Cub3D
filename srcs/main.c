@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 01:27:23 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/12 18:54:56 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/13 20:54:19 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,14 @@ int	ft_fill_map(t_data *data, char *file)
 		return (WRONG);
 	while (gnl >= 0)
 	{
-		//printf("times %d\n", times++);
 		gnl = get_next_line(fd, &l);
-		//printf("fl[%d] ll[%d]\n", data->m_fl, data->m_ll);
 		if (gnl == 0)
 		{
 			if (j >= data->m_fl && j <= data->m_ll)
 			{
 				data->map[i++] = ft_strdup(l);
 			}
-			break;
+			break ;
 		}
 		if (j >= data->m_fl && j <= data->m_ll)
 		{
@@ -52,7 +50,7 @@ int	ft_fill_map(t_data *data, char *file)
 		free (l);
 		j++;
 	}
-	data->map[i] = '\0';
+	data->map[i] = NULL;
 	close (fd);
 	if (ft_fill_map2(data) == WRONG)
 		return (WRONG);
@@ -157,11 +155,6 @@ int	main(int ac, char **av)
 	if (ft_parsing(ac, data, av[1]) == WRONG)
 		return (WRONG);
 	init_draw(data);
-	//find_hit_point(data, data->pl_tx_x, data->pl_tx_y, data->pa);
-	//printf("x=%d  y=%d\n", data->pl_tx_x, data->pl_tx_y);
-	//ray_till_wall_v(data);
-	//printf("y is --> %d\nx is --> %d\n", data->pl_tx_y, data->pl_tx_x);
-	//printf("pl y --> %d\npl tx y / 20 --> %d\n", data->pl_y, (data->pl_tx_y - 100) % 20);
 	mlx_hook(data->win, ON_DESTROY, 0, ft_exit, NULL);
 	mlx_hook(data->win, ON_KEYDOWN, 1L<<0, ft_action, data);
 	mlx_key_hook(data->win, ft_release, data);

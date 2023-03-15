@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 03:23:53 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/09 01:32:44 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/13 20:58:49 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@ int	ft_error(int n)
 {
 	if (n == 0)
 		printf("Error: Wrong number of arguments\n");
-	else if	(n == 1)
+	else if (n == 1)
 		printf("Error : Wrong extension of map\n");
-	else if	(n == 2)
+	else if (n == 2)
 		printf("Error : Map file is a directory\n");
-	else if	(n == 3)
+	else if (n == 3)
 		printf("Error : Map file not read properly\n");
-	else if	(n == 4)
+	else if (n == 4)
 		printf("Error : Wrong character on map found\n");
-	else if	(n == 5)
+	else if (n == 5)
 		printf("Error : Direction utilized in incorrect manner\n");
-	else if	(n == 6)
+	else if (n == 6)
 		printf("Error : Impossible to enter area found on the map\n");
-	else if	(n == 7)
+	else if (n == 7)
 		printf("Error : Hole in the map\n");
-	else if	(n == 8)
+	else if (n == 8)
 		printf("Error : Wall error\n");
-	else if	(n == 9)
+	else if (n == 9)
 		printf("Error: Parameters invalid\n");
 	else if (n == 10)
 		printf("Error: Texture path is a directory\n");

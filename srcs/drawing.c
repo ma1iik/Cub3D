@@ -3,76 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:17 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/13 06:09:10 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/13 20:53:18 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void draw_map(char **map, int rows, int cols, t_data *data)
+void	draw_char(char **map, int rows, int cols, t_data *data)
 {
-	int i, j;
-	int x, y;
-	int color;
-	int grid;
+	int	i;
+	int	j;
+	int	x;
+	int	y;
 
 	y = 0;
-	for (i = 0; i < rows; i++)
+	i = 0;
+	while (i < rows)
 	{
 		x = 0;
-		for (j = 0; j < cols; j++)
-		{
-			if (map[i][j] == '1')
-				color = 0x444444;
-			else if (map[i][j] == '0' || ft_ischar(map[i][j]))
-				color = 0xFFFFFF;
-			else
-				color = 0x000000;
-			for (int k = 0; k < TX_L; k++)
-			{
-				for (int l = 0; l < TX_L; l++)
-				{
-					if (k == 0 || l == 0 || k == TX_L - 1 || l == TX_L - 1)
-						my_mlx_pixel_put(data, x + l, y + k, 0x000000);
-					else
-						my_mlx_pixel_put(data, x + l, y + k, color);
-				}
-			}
-			x += TX_L;
-		}
-		y += TX_L;
-	}
-}
-
-// void	draw_circle(t_data *data, int rad, int x, int y, int color)
-// {
-// 	int radius = rad;
-// 	for (int i = x + 1 - radius; i <= x - 1 + radius; i++)
-// 	{
-// 		for (int j = y + 1 - radius; j <= y - 1 + radius; j++)
-// 		{
-// 			int distance = (i - x) * (i - x) + (j - y) * (j - y);
-// 			if (distance <= radius * radius)
-// 			{
-// 				my_mlx_pixel_put(data, i, j, color);
-// 			}
-// 		}
-// 	}
-// }
-
-void draw_char(char **map, int rows, int cols, t_data *data)
-{
-	int	i, j;
-	int x, y;
-
-	y = 0;
-	for (i = 0; i < rows; i++)
-	{
-		x = 0;
-		for (j = 0; j < cols; j++)
+		j = 0;
+		while (j < cols)
 		{
 			if (ft_ischar(map[i][j]))
 			{
@@ -81,11 +34,12 @@ void draw_char(char **map, int rows, int cols, t_data *data)
 				data->pl_tx_x = x + TX_L / 2;
 				ft_direction(data, map[i][j]);
 				return ;
-				// draw_circle(data,  TX_L/2, x + TX_L/2, y + TX_L/2, 0xFF0000);
 			}
 			x += TX_L;
+			j++;
 		}
 		y += TX_L;
+		i++;
 	}
 }
 
@@ -125,7 +79,7 @@ int	check_turn(t_data *data, t_ray *ray, int n)
 		return (0);
 }
 
-int check_exist(t_data *data, t_ray *ray, int n)
+int	check_exist(t_data *data, t_ray *ray, int n)
 {
 	int		x;
 	int		y;
@@ -148,8 +102,6 @@ int check_exist(t_data *data, t_ray *ray, int n)
 	{
 		x = (int)ray->bx / TX_L;
 		y = (int)ray->by / TX_L;
-		// printf("x is %d y is %d\n", x, y);
-		// printf("l is %d h is %d\n", data->map_l, data->map_h);
 		if ((x >= 0 && x < data->map_l) && (y >= 0 && y < data->map_h))
 		{
 			if (data->map[y][x] == '0' || ft_ischar(data->map[y][x]))
@@ -163,7 +115,7 @@ int check_exist(t_data *data, t_ray *ray, int n)
 	return (0);
 }
 
-void find_wall_a(t_data *data, t_ray *ray, double agl)
+void	find_wall_a(t_data *data, t_ray *ray, double agl)
 {
 	double	ya;
 	double	xa;
@@ -209,7 +161,7 @@ void find_wall_a(t_data *data, t_ray *ray, double agl)
 	}
 }
 
-void find_wall_b(t_data *data, t_ray *ray, double agl)
+void	find_wall_b(t_data *data, t_ray *ray, double agl)
 {
 	double	ya;
 	double	xa;
@@ -286,7 +238,6 @@ void	compare_a_b(t_data *data, t_ray *ray, double agl)
 	double	a;
 	double	b;
 	double	cos_ang;
-	double	ang_diff;
 
 	a = sqrtf(pow(data->pl_tx_x - ray->ax, 2)
 			+ pow(data->pl_tx_y - ray->ay, 2));
@@ -296,20 +247,17 @@ void	compare_a_b(t_data *data, t_ray *ray, double agl)
 	{
 		ray->x_fnl = ray->ax;
 		ray->y_fnl = ray->ay;
-		//printf("x[%.1f]y[%.1f]\n", data->x_fnl, data->y_fnl);
 		data->w_vertical = 0;
 	}
 	else
 	{
-		//printf("plx[%d]ply[%d]\nx[%.2f]y[%.2f]\n", data->pl_tx_x, data->pl_tx_y, ray->bx, ray->by);
 		ray->x_fnl = ray->bx;
 		ray->y_fnl = ray->by;
 		data->w_vertical = 1;
 	}
-	// printf("x[%.1f]y[%.1f]\n", data->x_fnl, data->y_fnl);
-	ang_diff = data->pa - agl;
-	cos_ang = cos(ang_diff);
-	ray->distance = sqrt((pow(data->pl_tx_x - ray->x_fnl, 2) + pow(data->pl_tx_y - ray->y_fnl, 2)));
+	cos_ang = cos(data->pa - agl);
+	ray->distance = sqrt((pow(data->pl_tx_x - ray->x_fnl, 2)
+				+ pow(data->pl_tx_y - ray->y_fnl, 2)));
 	ray->distance = ray->distance * cos_ang;
 }
 
@@ -324,23 +272,23 @@ void	ft_wl(t_data *data, double agl)
 
 void	draw_wall(t_data *data, t_ray *ray, int x, double agl)
 {
-	int	wall_top;
-	int	wall_bottom;
-	int	color;
-	int	mirrored_x;
+	int		wall_top;
+	int		wall_bottom;
+	int		color;
+	int		mirrored_x;
+	double	idx;
 
 	wall_top = HEIGHT / 2 - (ray->wall_h / 2);
 	wall_bottom = HEIGHT / 2 + ray->wall_h / 2;
 	ft_wl(data, agl);
-	// printf("wall bottom is %d\n", wall_bottom);
-	// printf("wall top is %d\n", wall_top);
 	if (wall_top < 0)
 		wall_top = 0;
-		//printf("[%d][%d]\n", data->texture.txt_x, data->texture.txt_y);
 	while (wall_top < wall_bottom && wall_top < 1080)
 	{
-		data->texture.txt_y = (1.0 - (double)(wall_bottom - wall_top) / ray->wall_h) * 64.0;
-		double idx = (double)data->texture.txt_x + (double)data->texture.txt_y * (double)64;
+		data->texture.txt_y = (1.0 - (double)(wall_bottom - wall_top)
+				/ ray->wall_h) * 64.0;
+		idx = (double)data->texture.txt_x
+			+ (double)data->texture.txt_y * (double)64;
 		color = data->texture.a_fnl[(int)idx];
 		mirrored_x = WIDTH - x - 1;
 		my_mlx_pixel_put(data, mirrored_x, wall_top, color);
@@ -396,17 +344,14 @@ void    loop_ext(t_data *data, t_ray *ray, double agl, int x, double cor_dis)
 	find_wall_a(data, ray, agl);
 	find_wall_b(data, ray, agl);
 	compare_a_b(data, ray, agl);
-	ray->plane = (WIDTH/2) / tan(FOV/2);
+	ray->plane = (WIDTH / 2) / tan(FOV / 2);
 	ray->wall_h = abs((int)(TX_L / ray->distance * ray->plane));
-	//dda(data, ray->x_fnl, ray->y_fnl, 0xFF0000);
 }
 
 void	draw_wall_1(t_data *data , t_ray *ray, double agl)
 {
-	//double	hit;
 	if (data->w_vertical == 1)
 	{
-		//hit = data->pl_tx_y + ray->distance * sin(agl);
 		if (agl < M_PI / 2 && agl > 3 * M_PI * 2)
 		{
 			data->texture.a_fnl = (int *)data->texture.a_ea;
@@ -419,7 +364,6 @@ void	draw_wall_1(t_data *data , t_ray *ray, double agl)
 	}
 	else
 	{
-		//hit = data->pl_tx_x + ray->distance * cos(agl);
 		if (agl < M_PI && agl > 0)
 		{
 			data->texture.a_fnl = (int *)data->texture.a_no;
@@ -430,11 +374,10 @@ void	draw_wall_1(t_data *data , t_ray *ray, double agl)
 		}
 		data->texture.txt_x = fmod(ray->x_fnl / 64.0, 1.0) * 64.0;
 	}
-	//data->texture.txt_x = (int)(TX_L * (hit - floor(hit)));
 	data->draw_height = fabs(64 / data->wl) * ray->plane;
 }
 
-void    cast_rays1(t_data *data)
+void	cast_rays1(t_data *data)
 {
 	int		i;
 	double	agl;
@@ -444,9 +387,7 @@ void    cast_rays1(t_data *data)
 	i = 0;
 	agl = add_angle(data->pa, -FOV / 2);
 	fov = FOV / WIDTH;
-	// draw_map(data->map, data->map_h, data->map_l, data);
-	// draw_circle(data, TX_L/6, data->pl_tx_x, data->pl_tx_y, 0xFF0000);
-	cor_dis = ft_cor_dis(data, &data->ray[WIDTH/2], data->pa, i);
+	cor_dis = ft_cor_dis(data, &data->ray[WIDTH / 2], data->pa, i);
 	draw_background(data);
 	data->r_distance = cor_dis;
 	while (i < WIDTH)
@@ -455,19 +396,15 @@ void    cast_rays1(t_data *data)
 			loop_ext(data, &data->ray[i], agl, i, cor_dis);
 		else
 		{
-			//printf("agl %.2f\n", data->pa);
 			loop_ext(data, &data->ray[i], agl, i, cor_dis);
 			data->x_fnl = data->ray[i].x_fnl;
 			data->y_fnl = data->ray[i].y_fnl;
-			//dda(data, data->x_fnl, data->y_fnl, 0x00FF00);
 		}
 		draw_wall_1(data, &data->ray[i], agl);
 		draw_wall(data, &data->ray[i], i,  agl);
 		agl = add_angle(agl, fov);
 		i++;
 	}
-	//printf("py[%.2f]px[%.2f]\n", data->pl_tx_y, data ->pl_tx_x);
-	//printf("y_fnl[%.2f]x_fnl[%.2f]\n", data->y_fnl, data ->x_fnl);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
 }
 
@@ -494,7 +431,6 @@ void	init_draw(t_data *data)
 			&data->texture.we_bpp, &data->texture.we_l, &data->texture.we_end);
 	data->texture.a_so = (int *)mlx_get_data_addr(data->texture.so,
 			&data->texture.no_bpp, &data->texture.so_l, &data->texture.so_end);
-	draw_map(data->map, data->map_h, data->map_l, data);	
 	draw_char(data->map, data->map_h, data->map_l, data);
 	cast_rays1(data);
 }

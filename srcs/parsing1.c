@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:19:02 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/12 18:54:32 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/13 20:57:59 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,14 @@ void	text_exst1(t_data *data, char *text, char *l)
 		fd = open(text, O_DIRECTORY);
 		if (fd > 0)
 		{
-			close(fd);	
+			close(fd);
 			ft_error(10);
 		}
 		close(fd);
 		fd = open(text, O_RDONLY);
 		if (fd == -1)
 		{
-			close(fd);	
+			close(fd);
 			ft_error(11);
 		}
 		close(fd);
@@ -146,14 +146,14 @@ void	text_exst2(t_data *data, char *text, char *l)
 		fd = open(text, O_DIRECTORY);
 		if (fd > 0)
 		{
-			close(fd);	
+			close(fd);
 			ft_error(10);
 		}
 		close(fd);
 		fd = open(text, O_RDONLY);
 		if (fd == -1)
 		{
-			close(fd);	
+			close(fd);
 			ft_error(11);
 		}
 		close(fd);
@@ -172,14 +172,14 @@ void	text_exst3(t_data *data, char *text, char *l)
 		fd = open(text, O_DIRECTORY);
 		if (fd > 0)
 		{
-			close(fd);	
+			close(fd);
 			ft_error(10);
 		}
 		close(fd);
 		fd = open(text, O_RDONLY);
 		if (fd == -1)
 		{
-			close(fd);	
+			close(fd);
 			ft_error(11);
 		}
 		close(fd);
@@ -198,14 +198,14 @@ void	text_exst4(t_data *data, char *text, char *l)
 		fd = open(text, O_DIRECTORY);
 		if (fd > 0)
 		{
-			close(fd);	
+			close(fd);
 			ft_error(10);
 		}
 		close(fd);
 		fd = open(text, O_RDONLY);
 		if (fd == -1)
 		{
-			close(fd);	
+			close(fd);
 			ft_error(11);
 		}
 		close(fd);
@@ -253,7 +253,8 @@ void	do_ident(t_data *data, char *l)
 
 void check_ident(t_data *data)
 {
-	if (data->texture.ea_n > 1 || data->texture.so_n > 1 || data->texture.we_n > 1 || data->texture.no_n > 1)
+	if (data->texture.ea_n > 1 || data->texture.so_n > 1
+		|| data->texture.we_n > 1 || data->texture.no_n > 1)
 	{
 		ft_error(9);
 		exit (1);
@@ -540,19 +541,17 @@ int	ft_fill_txt(t_data *data, int fd)
 		gnl = get_next_line(fd, &l);
 		if (data->texture.type == 6)
 		{
-			if(check_stock_txt(data, l) == 1 && data->m_fl == 0)
+			if (check_stock_txt(data, l) == 1 && data->m_fl == 0)
 				data->m_fl = data->texture.l_i;
-			if(check_stock_txt(data, l) == 1 && data->m_fl != 0)
+			if (check_stock_txt(data, l) == 1 && data->m_fl != 0)
 				data->m_ll = data->texture.l_i;
 		}
 		else
 		{
-			//printf("%s\n", l);
 			stock_txt(data, l);
 		}
 		data->texture.l_i++;
 		free (l);
-		//printf("type is %d\n", data->texture.type);
 	}
 	if (data->texture.type > 6)
 	{
@@ -568,11 +567,6 @@ int ft_parsing(int ac, t_data *data, char *file)
 
 	if (ac != 2)
 		return (ft_error(0));
-	//data->map = ft_calloc(sizeof(char *), ft_mapsize(file) + 1);
-	//data->map_star = ft_calloc(sizeof(char *), ft_mapsize(file) + 1);
-	//data->map_h = ft_mapsize(file);
-	//printf("%d\n", data->map_h);
-	//printf("LOL\n");
 	fd = open(file, O_RDONLY);
 	if (ft_check_ext(data, file) == WRONG)
 		return (WRONG);

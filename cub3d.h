@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/13 10:36:16 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/13 18:32:36 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,11 +183,8 @@ int		ft_rowsbetween(t_data *data, char **map);
 //INIT and DRAW
 void	init_draw(t_data *data);
 void	draw_char(char **map, int rows, int cols, t_data *data);
-void	draw_circle(t_data *data, int rad, int x, int y, int color);
-void	draw_map(char **map, int rows, int cols, t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	ft_direction(t_data *data, char player);
-void	draw_ray(t_data *data, int x0, int y0, int x1, int y1, int color);
 void	dda(t_data *data, double x2, double y2, int color);
 t_ray	ray_till_wall_h(t_data *data, double pa);
 t_ray	ray_till_wall_v(t_data *data, double pa);

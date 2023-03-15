@@ -6,11 +6,18 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:17 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/13 20:53:18 by misrailo         ###   ########.fr       */
+/*   Updated: 2023/03/15 09:38:33 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+void	drawchar2(t_data *data, int y, int x)
+{
+	data->pl_tx_y = y + TX_L / 2;
+	data->pl_tx_x = x + TX_L / 2;
+	ft_direction(data, data->player);
+}
 
 void	draw_char(char **map, int rows, int cols, t_data *data)
 {
@@ -30,9 +37,7 @@ void	draw_char(char **map, int rows, int cols, t_data *data)
 			if (ft_ischar(map[i][j]))
 			{
 				data->player = map[i][j];
-				data->pl_tx_y = y + TX_L / 2;
-				data->pl_tx_x = x + TX_L / 2;
-				ft_direction(data, map[i][j]);
+				drawchar2(data, y, x);
 				return ;
 			}
 			x += TX_L;
@@ -79,6 +84,42 @@ int	check_turn(t_data *data, t_ray *ray, int n)
 		return (0);
 }
 
+int	check_exist1(t_data *data, t_ray *ray)
+{
+	int		x;
+	int		y;
+
+	x = (int)ray->ax / TX_L;
+	y = (int)ray->ay / TX_L;
+	if ((x >= 0 && x < data->map_l) && (y >= 0 && y < data->map_h))
+	{
+		if (data->map[y][x] == '0' || ft_ischar(data->map[y][x]))
+			return (1);
+		else
+			return (0);
+	}
+	else
+		return (0);
+}
+
+int	check_exist2(t_data *data, t_ray *ray)
+{
+	int		x;
+	int		y;
+
+	x = (int)ray->bx / TX_L;
+	y = (int)ray->by / TX_L;
+	if ((x >= 0 && x < data->map_l) && (y >= 0 && y < data->map_h))
+	{
+		if (data->map[y][x] == '0' || ft_ischar(data->map[y][x]))
+			return (1);
+		else
+			return (0);
+	}
+	else
+		return (0);
+}
+
 int	check_exist(t_data *data, t_ray *ray, int n)
 {
 	int		x;
@@ -86,31 +127,45 @@ int	check_exist(t_data *data, t_ray *ray, int n)
 
 	if (n == 1)
 	{
-		x = (int)ray->ax / TX_L;
-		y = (int)ray->ay / TX_L;
-		if ((x >= 0 && x < data->map_l) && (y >= 0 && y < data->map_h))
-		{
-			if (data->map[y][x] == '0' || ft_ischar(data->map[y][x]))
-				return (1);
-			else
-				return (0);
-		}
+		if (check_exist1(data, ray))
+			return (1);
 		else
 			return (0);
 	}
 	else if (n == 2)
 	{
-		x = (int)ray->bx / TX_L;
-		y = (int)ray->by / TX_L;
-		if ((x >= 0 && x < data->map_l) && (y >= 0 && y < data->map_h))
-		{
-			if (data->map[y][x] == '0' || ft_ischar(data->map[y][x]))
-				return (1);
-			else
-				return (0);
-		}
+		if (check_exist2(data, ray))
+			return (1);
 		else
 			return (0);
+	}
+	return (0);
+}
+
+int	find_wall_a2(t_data *data, t_ray *ray, double agl, double *ya)
+{
+	if ((agl > 0 - 0.0001 && agl < 0 + 0.0001)
+		|| (agl > 2 * M_PI - 0.0001 && agl < 2 * M_PI + 0.0001))
+	{
+		ray->ay = data->pl_tx_y;
+		ray->ax = data->map_l * TX_L;
+		return (1);
+	}
+	else if (agl > M_PI - 0.0001 && agl < M_PI + 0.0001)
+	{
+		ray->ax = 0;
+		ray->ay = data->pl_tx_y;
+		return (1);
+	}
+	else if (agl <= M_PI && agl >= 0)
+	{
+		*ya -= TX_L;
+		ray->ay = floor(data->pl_tx_y / TX_L) * (TX_L) - 0.00000001;
+	}
+	else
+	{
+		*ya = TX_L;
+		ray->ay = floor(data->pl_tx_y / TX_L) * (TX_L) + TX_L;
 	}
 	return (0);
 }
@@ -121,29 +176,8 @@ void	find_wall_a(t_data *data, t_ray *ray, double agl)
 	double	xa;
 
 	ya = 0;
-	if ((agl > 0 - 0.0001 && agl < 0 + 0.0001)
-		|| (agl > 2 * M_PI - 0.0001 && agl < 2 * M_PI + 0.0001))
-	{
-		ray->ay = data->pl_tx_y;
-		ray->ax = data->map_l * TX_L;
+	if (find_wall_a2(data, ray, agl, &ya))
 		return ;
-	}
-	else if (agl > M_PI - 0.0001 && agl < M_PI + 0.0001)
-	{
-		ray->ax = 0;
-		ray->ay = data->pl_tx_y;
-		return ;
-	}
-	else if (agl <= M_PI && agl >= 0)
-	{
-		ya -= TX_L;
-		ray->ay = floor(data->pl_tx_y / TX_L) * (TX_L) - 0.00000001;
-	}
-	else
-	{
-		ya = TX_L;
-		ray->ay = floor(data->pl_tx_y / TX_L) * (TX_L) + TX_L;
-	}
 	xa = -ya / tan(agl);
 	ray->ax = data->pl_tx_x + (data->pl_tx_y - ray->ay) / tan(agl);
 	while ((check_turn(data, ray, 1) == 1) && (check_exist(data, ray, 1) == 1))
@@ -161,6 +195,33 @@ void	find_wall_a(t_data *data, t_ray *ray, double agl)
 	}
 }
 
+int	find_wall_b2(t_data *data, t_ray *ray, double agl, double *xa)
+{
+	if (agl < 3 * M_PI / 2 + 0.001 && agl > 3 * M_PI / 2 - 0.001)
+	{
+		ray->by = TX_L * data->map_h;
+		ray->bx = data->pl_tx_x;
+		return (1);
+	}
+	else if (agl < M_PI / 2 + 0.001 && agl > M_PI / 2 - 0.001)
+	{
+		ray->by = 0;
+		ray->bx = data->pl_tx_x;
+		return (1);
+	}
+	else if (agl < 3 * M_PI / 2 && agl > M_PI / 2)
+	{
+		*xa = -TX_L;
+		ray->bx = floor((double)data->pl_tx_x / TX_L) * (TX_L) - 0.00000001;
+	}
+	else
+	{
+		*xa = TX_L;
+		ray->bx = floor((double)data->pl_tx_x / TX_L) * (TX_L) + TX_L;
+	}
+	return (0);
+}
+
 void	find_wall_b(t_data *data, t_ray *ray, double agl)
 {
 	double	ya;
@@ -169,28 +230,8 @@ void	find_wall_b(t_data *data, t_ray *ray, double agl)
 	xa = 0;
 	ray->bx = 0;
 	ray->by = 0;
-	if (agl < 3 * M_PI / 2 + 0.001 && agl > 3 * M_PI / 2 - 0.001)
-	{
-		ray->by = TX_L * data->map_h;
-		ray->bx = data->pl_tx_x;
+	if (find_wall_b2(data, ray, agl, &xa))
 		return ;
-	}
-	else if (agl < M_PI / 2 + 0.001 && agl > M_PI / 2 - 0.001)
-	{
-		ray->by = 0;
-		ray->bx = data->pl_tx_x;
-		return ;
-	}
-	else if (agl < 3 * M_PI / 2 && agl > M_PI / 2)
-	{
-		xa = -TX_L;
-		ray->bx = floor((double)data->pl_tx_x / TX_L) * (TX_L) - 0.00000001;
-	}
-	else
-	{
-		xa = TX_L;
-		ray->bx = floor((double)data->pl_tx_x / TX_L) * (TX_L) + TX_L;
-	}
 	ya = -xa * tan(agl);
 	ray->by = (double)data->pl_tx_y
 		+ ((double)data->pl_tx_x - ray->bx) * tan(agl);
@@ -312,19 +353,27 @@ void draw_background(t_data *data)
 	int	x;
 	int	y;
 
-	for (y = 0; y < HEIGHT / 2; y++)
+	x = 0;
+	y = 0;
+	while (y < HEIGHT / 2)
 	{
-		for (x = 0; x < WIDTH; x++)
+		while (x < WIDTH)
 		{
 			my_mlx_pixel_put(data, x, y, rgb_to_code(data, 1));
+			x++;
 		}
+		y++;
+		x = 0;
 	}
-	for (y = HEIGHT / 2; y < HEIGHT; y++)
+	while (y < HEIGHT)
 	{
-		for (x = 0; x < WIDTH; x++)
+		while (x < WIDTH)
 		{
 			my_mlx_pixel_put(data, x, y, rgb_to_code(data, 2));
+			x++;
 		}
+		y++;
+		x = 0;
 	}
 }
 
@@ -377,19 +426,11 @@ void	draw_wall_1(t_data *data , t_ray *ray, double agl)
 	data->draw_height = fabs(64 / data->wl) * ray->plane;
 }
 
-void	cast_rays1(t_data *data)
+void	cast_rays2(t_data *data, double agl, double fov, double cor_dis)
 {
-	int		i;
-	double	agl;
-	double	fov;
-	double	cor_dis;
+	int	i;
 
 	i = 0;
-	agl = add_angle(data->pa, -FOV / 2);
-	fov = FOV / WIDTH;
-	cor_dis = ft_cor_dis(data, &data->ray[WIDTH / 2], data->pa, i);
-	draw_background(data);
-	data->r_distance = cor_dis;
 	while (i < WIDTH)
 	{
 		if (i != WIDTH / 2)
@@ -401,11 +442,25 @@ void	cast_rays1(t_data *data)
 			data->y_fnl = data->ray[i].y_fnl;
 		}
 		draw_wall_1(data, &data->ray[i], agl);
-		draw_wall(data, &data->ray[i], i,  agl);
+		draw_wall(data, &data->ray[i], i, agl);
 		agl = add_angle(agl, fov);
 		i++;
 	}
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+}
+
+void	cast_rays1(t_data *data)
+{
+	double	agl;
+	double	fov;
+	double	cor_dis;
+
+	agl = add_angle(data->pa, -FOV / 2);
+	fov = FOV / WIDTH;
+	cor_dis = ft_cor_dis(data, &data->ray[WIDTH / 2], data->pa, 0);
+	draw_background(data);
+	data->r_distance = cor_dis;
+	cast_rays2(data, agl, fov, cor_dis);
 }
 
 void	init_draw(t_data *data)

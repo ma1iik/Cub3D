@@ -6,55 +6,37 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 01:27:23 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/13 20:54:19 by misrailo         ###   ########.fr       */
+/*   Updated: 2023/03/15 09:57:24 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	ft_fill_map(t_data *data, char *file)
+int	ft_fill_map(t_data *data, char *file, int i, int j)
 {
 	char	*l;
 	int		gnl;
-	int		i;
-	int		j;
 	int		fd;
 
 	gnl = 1;
-	i = 0;
-	j = 0;
 	fd = open(file, O_RDONLY);
-	data->map_h = data->m_ll - data->m_fl + 1;
-	printf ("%d height\n", data->map_h);
-	printf ("%d fl\n", data->m_fl);
-	printf ("%d ll\n", data->m_ll);
-	data->map = ft_calloc(sizeof(char *), data->map_h + 1);
-	data->map_star = ft_calloc(sizeof(char *), data->map_h + 1);
-	if (!data->map)
-		return (WRONG);
 	while (gnl >= 0)
 	{
 		gnl = get_next_line(fd, &l);
 		if (gnl == 0)
 		{
 			if (j >= data->m_fl && j <= data->m_ll)
-			{
 				data->map[i++] = ft_strdup(l);
-			}
 			break ;
 		}
 		if (j >= data->m_fl && j <= data->m_ll)
-		{
 			data->map[i++] = ft_strdup(l);
-		}
 		free (l);
 		j++;
 	}
 	data->map[i] = NULL;
 	close (fd);
-	if (ft_fill_map2(data) == WRONG)
-		return (WRONG);
-	if (ft_fill_map3(data) == WRONG)
+	if (ft_fill_map2(data) == WRONG || ft_fill_map3(data) == WRONG)
 		return (WRONG);
 	return (RIGHT);
 }
@@ -156,7 +138,7 @@ int	main(int ac, char **av)
 		return (WRONG);
 	init_draw(data);
 	mlx_hook(data->win, ON_DESTROY, 0, ft_exit, NULL);
-	mlx_hook(data->win, ON_KEYDOWN, 1L<<0, ft_action, data);
+	mlx_hook(data->win, ON_KEYDOWN, 1L << 0, ft_action, data);
 	mlx_key_hook(data->win, ft_release, data);
 	mlx_loop(data->mlx);
 }

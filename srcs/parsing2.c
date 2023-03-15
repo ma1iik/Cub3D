@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:19:02 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/13 20:58:14 by misrailo         ###   ########.fr       */
+/*   Updated: 2023/03/15 11:42:49 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,23 @@ int	ft_checkwalls(t_data *data)
 	return (RIGHT);
 }
 
+int	check_walls2(t_data *data, int y, int x, char **maps)
+{
+	if (y > 0 && (maps[y - 1][x] == '0'
+		|| ft_ischar(maps[y - 1][x])))
+		return (ft_error(7));
+	if (x <= data->map_l && (maps[y][x + 1] == '0'
+		|| ft_ischar(maps[y][x + 1])))
+		return (ft_error(7));
+	if (y < data->map_h - 1 && (maps[y + 1][x] == '0'
+		|| ft_ischar(maps[y + 1][x])))
+		return (ft_error(7));
+	if (x > 0 && (maps[y][x - 1] == '0'
+		|| ft_ischar(maps[y][x - 1])))
+		return (ft_error(7));
+	return (0);
+}
+
 int	ft_checkwalls1(t_data *data, char **maps)
 {
 	int		x;
@@ -58,20 +75,7 @@ int	ft_checkwalls1(t_data *data, char **maps)
 		while (maps[y][x])
 		{
 			if (maps[y][x] == '*')
-			{
-				if (y > 0 && (maps[y - 1][x] == '0'
-					|| ft_ischar(maps[y - 1][x])))
-					return (ft_error(7));
-				if (x <= data->map_l && (maps[y][x + 1] == '0'
-					|| ft_ischar(maps[y][x + 1])))
-					return (ft_error(7));
-				if (y < data->map_h - 1 && (maps[y + 1][x] == '0'
-					|| ft_ischar(maps[y + 1][x])))
-					return (ft_error(7));
-				if (x > 0 && (maps[y][x - 1] == '0'
-					|| ft_ischar(maps[y][x - 1])))
-					return (ft_error(7));
-			}
+				check_walls2(data, y, x, maps);
 			x++;
 		}
 		y++;

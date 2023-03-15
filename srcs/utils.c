@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 03:23:53 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/13 20:58:49 by misrailo         ###   ########.fr       */
+/*   Updated: 2023/03/15 10:43:05 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ int	ft_error(int n)
 		printf("Error : Wall error\n");
 	else if (n == 9)
 		printf("Error: Parameters invalid\n");
-	else if (n == 10)
-		printf("Error: Texture path is a directory\n");
-	else if (n == 11)
+	else if (n == 11 || n == 10)
 		printf("Error: Texture path is invalid\n");
 	exit (1);
 	return (WRONG);

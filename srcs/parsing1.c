@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:19:02 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/13 20:57:59 by misrailo         ###   ########.fr       */
+/*   Updated: 2023/03/15 10:37:30 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,8 @@ int	ft_check_ext(t_data *data, char *file)
 	return (RIGHT);
 }
 
-int	ft_wrongchar(t_data *data)
+int	ft_wrongchar(t_data *data, int i, int j, int num)
 {
-	int	i;
-	int	j;
-	int	num;
-
-	i = 0;
-	num = 0;
 	while (data->map[i])
 	{
 		j = 0;
@@ -270,6 +264,24 @@ void check_col(t_data *data)
 	}
 }
 
+int is_ident2(t_data *data, char *l)
+{
+	if (ft_strncmp(l, "SO", 2) == 0 && ft_isspace(l[2]))
+	{
+		data->texture.so_n++;
+		check_ident(data);
+		return (1);
+	}
+	else if (ft_strncmp(l, "WE", 2) == 0 && ft_isspace(l[2]))
+	{
+		data->texture.we_n++;
+		check_ident(data);
+		return (1);
+	}
+	else
+		return (0);
+}
+
 int is_ident(t_data *data, char *l)
 {
 	if (ft_strncmp(l, "EA", 2) == 0 && ft_isspace(l[2]))
@@ -284,20 +296,9 @@ int is_ident(t_data *data, char *l)
 		check_ident(data);
 		return (1);
 	}
-	else if (ft_strncmp(l, "SO", 2) == 0 && ft_isspace(l[2]))
-	{
-		data->texture.so_n++;
-		check_ident(data);
+	if (is_ident2(data, l))
 		return (1);
-	}
-	else if (ft_strncmp(l, "WE", 2) == 0 && ft_isspace(l[2]))
-	{
-		data->texture.we_n++;
-		check_ident(data);
-		return (1);
-	}
-	else
-		return (0);
+	return (0);
 }
 
 int	is_col(t_data *data, char *l)
@@ -547,16 +548,13 @@ int	ft_fill_txt(t_data *data, int fd)
 				data->m_ll = data->texture.l_i;
 		}
 		else
-		{
 			stock_txt(data, l);
-		}
 		data->texture.l_i++;
 		free (l);
 	}
 	if (data->texture.type > 6)
 	{
 		ft_error(9);
-		exit(1);
 	}
 	return (RIGHT);
 }
@@ -572,9 +570,14 @@ int ft_parsing(int ac, t_data *data, char *file)
 		return (WRONG);
 	if (ft_fill_txt(data, fd) == WRONG)
 		return (WRONG);
-	if (ft_fill_map(data, file) == WRONG)
+	data->map_h = data->m_ll - data->m_fl + 1;
+	data->map = ft_calloc(sizeof(char *), data->map_h + 1);
+	data->map_star = ft_calloc(sizeof(char *), data->map_h + 1);
+	if (!data->map || !data->map_star)
 		return (WRONG);
-	if (ft_wrongchar(data) == WRONG)
+	if (ft_fill_map(data, file, 0, 0) == WRONG)
+		return (WRONG);
+	if (ft_wrongchar(data, 0, 0, 0) == WRONG)
 		return (WRONG);
 	if (ft_checkwalls(data) == WRONG)
 		return (WRONG);

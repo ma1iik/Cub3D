@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 02:27:49 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/13 18:32:36 by misrailo         ###   ########.fr       */
+/*   Updated: 2023/03/15 11:23:43 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 # define TX_L 64
-# define MOVE 10
+# define MOVE 20
 # define FOV 1.0472
 
 # ifdef __APPLE__
@@ -168,9 +168,9 @@ int		ft_parsing(int ac, t_data *data, char *file);
 int		ft_check_ext(t_data *data, char *file);
 int		ft_error(int n);
 int		ft_mapsize(char *file);
-int		ft_wrongchar(t_data *data);
+int		ft_wrongchar(t_data *data, int i, int j, int num);
 int		ft_map_len(t_data *data);
-int		ft_fill_map(t_data *data, char *file);
+int		ft_fill_map(t_data *data, char *file, int i, int j);
 int		ft_fill_map2(t_data *data);
 int		ft_fill_map3(t_data *data);
 int		ft_checkways(int x, int y, char **map, t_data *data);
@@ -185,7 +185,6 @@ void	init_draw(t_data *data);
 void	draw_char(char **map, int rows, int cols, t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	ft_direction(t_data *data, char player);
-void	dda(t_data *data, double x2, double y2, int color);
 t_ray	ray_till_wall_h(t_data *data, double pa);
 t_ray	ray_till_wall_v(t_data *data, double pa);
 void	cast_rays1(t_data *data);
@@ -204,3 +203,12 @@ int		ft_action(int key, t_data *data);
 void	change_pos(t_data *data, int j, int i);
 
 #endif
+
+
+main
+{
+	DATA->PLAYER = 'N'
+	DATA->MAP = {"ERWGTERTER, GFEAHSEH, ERGSETYSTEH"}
+	DATA->PLX = 15;
+	DATA->PLY = 30;
+}

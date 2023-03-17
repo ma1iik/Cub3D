@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 03:23:53 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:17 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/17 20:36:52 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_error(int n)
 	else if (n == 4)
 		printf("Error\nWrong character on map found\n");
 	else if (n == 5)
-		printf("Error\nDirection utilized in incorrect manner\n");
+		printf("Error\nPlayer direction utilized in incorrect manner\n");
 	else if (n == 6)
 		printf("Error\nImpossible to enter area found on the map\n");
 	else if (n == 7)

@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:15:21 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/15 21:05:52 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/16 22:50:07 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 int	ft_release(int key, t_data *data)
 {
+	(void)data;
 	int i;
 
 	i = 0;
-	printf ("frei\n");	
-	while (data->map[i]){
-		free(data->map[i++]);
-	}
-	free (data->map);
-	i = 0;
-	while (data->map_star[i])
-		free(data->map_star[i++]);
-	free (data->map_star);
 	if (key == ESC)
-	
+	{
+		while (data->map[i])
+			free(data->map[i++]);
+		free (data->map);
+		i = 0;
+		while (data->map_star[i])
+			free(data->map_star[i++]);
+		free (data->map_star);
 		exit(0);
+	}
 	return (0);
 }
 

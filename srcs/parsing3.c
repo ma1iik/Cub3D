@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:19:02 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/15 19:19:20 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/17 20:46:40 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	texture_extns(char *texture)
 			if ((texture[l + 1] != 'x') || (texture[l + 2] != 'p')
 				|| ((texture[l + 3] != 'm') || (texture[l + 4])))
 			{
-				printf("Error\nExtension path invalid!\n");
+				printf("Error\nPath extension invalid!\n");
 				exit(1);
 			}
 		}

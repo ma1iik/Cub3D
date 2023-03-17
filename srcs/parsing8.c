@@ -6,11 +6,12 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 02:19:02 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/15 19:32:20 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/16 23:15:02 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
 
 int	ft_fill_map(t_data *data, char *file, int i, int j)
 {
@@ -27,6 +28,7 @@ int	ft_fill_map(t_data *data, char *file, int i, int j)
 		{
 			if (j >= data->m_fl && j <= data->m_ll)
 				data->map[i++] = ft_strdup(l);
+			free (l);
 			break ;
 		}
 		if (j >= data->m_fl && j <= data->m_ll)

@@ -6,7 +6,7 @@
 /*   By: ma1iik <ma1iik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 03:23:53 by ma1iik            #+#    #+#             */
-/*   Updated: 2023/03/15 20:23:18 by ma1iik           ###   ########.fr       */
+/*   Updated: 2023/03/16 13:39:44 by ma1iik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 int	ft_exit(t_data *data)
 {
-	int i;
+	(void)data;
+	// int i;
 
-	i = 0;
-	printf ("freeing\n");	
-	while (data->map[i]){
-		free(data->map[i++]);
-	}
-	free (data->map);
-	i = 0;
-	while (data->map_star[i])
-		free(data->map_star[i++]);
-	free (data->map_star);
+	// i = 0;
+	// printf ("freeing\n");	
+	// while (data->map[i]){
+	// 	free(data->map[i++]);
+	// }
+	// free (data->map);
+	// i = 0;
+	// while (data->map_star[i])
+	// 	free(data->map_star[i++]);
+	// free (data->map_star);
 	exit(0);
 }
 
